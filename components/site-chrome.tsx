@@ -150,17 +150,8 @@ export function Nav() {
 
           <div className="flex items-center gap-3">
             {/* Book Demo — hidden on mobile when menu open to reduce clutter */}
-            <button type="button" {...CAL_DATA} className="group relative inline-flex items-center">
-              <span className="absolute inset-y-[6px] right-0 w-[calc(100%-1.25rem)] rounded-[12px] bg-accent" />
-              <span className="relative z-10 rounded-[12px] bg-ink px-5 py-3 text-sm font-medium text-white">
-                <VariableProximityText label="Book Demo" />
-              </span>
-              <span className="relative z-10 -ml-px flex h-10 w-10 items-center justify-center rounded-[12px] text-black transition-transform duration-300 group-hover:-rotate-45">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                  <line x1="5" y1="12" x2="19" y2="12" />
-                  <polyline points="12 5 19 12 12 19" />
-                </svg>
-              </span>
+            <button type="button" {...CAL_DATA} className="rounded-[12px] bg-ink px-5 py-3 text-sm font-medium text-white transition-transform duration-200 hover:scale-[1.04]">
+              <VariableProximityText label="Book Demo" />
             </button>
 
             {/* Hamburger — mobile only */}
