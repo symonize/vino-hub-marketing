@@ -207,26 +207,42 @@ function FeatureCards() {
     <section className="mx-auto max-w-[1300px] px-6 py-24">
       <div className="mx-auto max-w-[780px] text-center">
         <h2 className="text-center text-[clamp(32px,4.5vw,50px)] font-medium leading-[1.18] tracking-[-1.5px] text-ink">
-          <StaggeredText
-            as="span"
-            className="justify-center"
-            text="Everything Your Team Needs to Sell More Wine."
-            segmentBy="words"
-            delay={55}
-            duration={0.7}
-            direction="top"
-            blur
-          />
-          <StaggeredText
-            as="span"
-            className="justify-center font-serif italic font-normal"
-            text="In One Place"
-            segmentBy="words"
-            delay={55}
-            duration={0.7}
-            direction="top"
-            blur
-          />
+          <div>
+            <StaggeredText
+              as="span"
+              className="justify-center"
+              text="Everything Your Team Needs"
+              segmentBy="words"
+              delay={55}
+              duration={0.7}
+              direction="top"
+              blur
+            />
+          </div>
+          <div>
+            <StaggeredText
+              as="span"
+              className="justify-center"
+              text="to Sell More Wine."
+              segmentBy="words"
+              delay={55}
+              duration={0.7}
+              direction="top"
+              blur
+            />
+          </div>
+          <div>
+            <StaggeredText
+              as="span"
+              className="justify-center font-serif italic font-normal"
+              text="In One Place"
+              segmentBy="words"
+              delay={55}
+              duration={0.7}
+              direction="top"
+              blur
+            />
+          </div>
         </h2>
         <p className="mx-auto mt-6 max-w-[549px] text-[19px] leading-[28px] tracking-[-0.19px] text-muted">
           Update all your wine portfolio from a single source of truth all from a
