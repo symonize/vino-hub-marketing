@@ -24,10 +24,15 @@ export default function TeamModal({ member, onClose }: Props) {
     if (!member) return;
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
     document.addEventListener("keydown", onKey);
+    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
     document.body.style.overflow = "hidden";
+    document.body.style.paddingRight = `${scrollbarWidth}px`;
+    document.documentElement.style.setProperty("--scrollbar-width", `${scrollbarWidth}px`);
     return () => {
       document.removeEventListener("keydown", onKey);
       document.body.style.overflow = "";
+      document.body.style.paddingRight = "";
+      document.documentElement.style.removeProperty("--scrollbar-width");
     };
   }, [member, onClose]);
 

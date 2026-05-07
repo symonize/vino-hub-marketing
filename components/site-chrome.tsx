@@ -117,7 +117,7 @@ export function Nav() {
   const [open, setOpen] = useState(false);
 
   return (
-    <nav className="fixed top-0 left-1/2 -translate-x-1/2 z-20 w-[min(1100px,92%)]">
+    <nav className="fixed top-0 left-1/2 -translate-x-1/2 z-20 w-[min(1100px,92%)]" style={{ marginRight: "var(--scrollbar-width, 0px)" }}>
       <div className="relative">
         <NotchWing side="left" />
         <NotchWing side="right" />
