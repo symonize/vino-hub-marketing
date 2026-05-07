@@ -118,13 +118,14 @@ export function Nav() {
 
   return (
     <nav className="fixed top-0 left-1/2 -translate-x-1/2 z-20 w-[min(1100px,92%)]">
+      <div className="relative">
+        <NotchWing side="left" />
+        <NotchWing side="right" />
       <motion.div
-        className="relative overflow-hidden rounded-b-[32px] bg-white/70 backdrop-blur-md shadow-2xl shadow-black/20"
+        className="overflow-hidden rounded-b-[32px] bg-white/70 backdrop-blur-md shadow-2xl shadow-black/20"
         animate={{ height: open ? "auto" : 80 }}
         transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
       >
-        <NotchWing side="left" />
-        <NotchWing side="right" />
 
         {/* Top bar — always visible */}
         <div className="flex h-20 items-center justify-between px-4">
@@ -205,6 +206,7 @@ export function Nav() {
           )}
         </AnimatePresence>
       </motion.div>
+      </div>
     </nav>
   );
 }
