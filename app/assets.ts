@@ -1,8 +1,8 @@
 export const assets = {
   heroBg: "/assets/hero-bg.png",
-  heroSky: "/assets/background sky.png",
-  heroDashboard: "/assets/dashboard.png",
-  heroVineyard: "/assets/vineyard.png",
+  heroSky: "/assets/background sky.webp",
+  heroDashboard: "/assets/dashboard.webp",
+  heroVineyard: "/assets/vineyard.webp",
   logoStrip: "/assets/logo-strip.png",
   vinoHubWordmark: "/assets/VinoHub.svg",
   vinoHubLarge: "/assets/VinoHub.svg",
