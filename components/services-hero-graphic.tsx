@@ -1,139 +1,156 @@
 "use client";
 
-import { motion } from "motion/react";
+import { useEffect, useRef, useState } from "react";
 import { assets } from "@/app/assets";
 
-/**
- * Hero graphic: bottle nodes scattered around the panel, connected to the
- * VinoHub logo at center via curved lines. Glowing dots animate along each
- * line toward the center, suggesting data/products flowing into the platform.
- */
-export default function ServicesHeroGraphic() {
-  // Coordinate space: 1400 x 480. All bottle positions and the center logo
-  // are placed in this space; the SVG and nodes share it via percentage layout.
-  const W = 1400;
-  const H = 480;
-  const cx = W / 2;
-  const cy = H / 2;
+// Node definitions as fractions of the container (cx, cy = center of circle)
+// All values are 0–1 relative to the rendered container width/height.
+const NODE_DEFS = [
+  { fx: 0.04,  fy: 0.22, r: 34, img: assets.bottleF, dur: 2.2, delay: 0.0 },
+  { fx: 0.16,  fy: 0.08, r: 28, img: assets.bottleE, dur: 2.4, delay: 0.3 },
+  { fx: 0.29,  fy: 0.28, r: 22, img: assets.bottleD, dur: 2.0, delay: 0.6 },
+  { fx: 0.38,  fy: 0.50, r: 26, img: assets.bottleA, dur: 1.9, delay: 0.1 },
+  { fx: 0.24,  fy: 0.72, r: 38, img: assets.bottleB, dur: 2.3, delay: 0.5 },
+  { fx: 0.76,  fy: 0.72, r: 40, img: assets.bottleC, dur: 2.1, delay: 0.2 },
+  { fx: 0.88,  fy: 0.18, r: 26, img: assets.bottleG, dur: 2.5, delay: 0.4 },
+  { fx: 0.96,  fy: 0.55, r: 30, img: assets.bottleF, dur: 2.0, delay: 0.7 },
+];
 
-  // Each node: position (in viewBox coords), bottle image, size, and the
-  // curve control point that bends the line toward the center.
-  const nodes: {
-    x: number;
-    y: number;
-    size: number;
-    img: string;
-    cx: number;
-    cy: number;
-    duration: number;
-    delay: number;
-  }[] = [
-    { x: 80,   y: 80,  size: 62, img: assets.bottleF, cx: 350,  cy: 130, duration: 2.2, delay: 0.0 },
-    { x: 240,  y: 60,  size: 49, img: assets.bottleE, cx: 480,  cy: 160, duration: 2.4, delay: 0.3 },
-    { x: 410,  y: 130, size: 38, img: assets.bottleD, cx: 540,  cy: 210, duration: 2.0, delay: 0.6 },
-    { x: 540,  y: 200, size: 43, img: assets.bottleA, cx: 620,  cy: 230, duration: 1.9, delay: 0.1 },
-    { x: 360,  y: 280, size: 69, img: assets.bottleB, cx: 540,  cy: 290, duration: 2.3, delay: 0.5 },
-    { x: 1180, y: 280, size: 73, img: assets.bottleC, cx: 920,  cy: 290, duration: 2.1, delay: 0.2 },
-    { x: 1310, y: 130, size: 45, img: assets.bottleG, cx: 1080, cy: 210, duration: 2.5, delay: 0.4 },
-  ];
+export default function ServicesHeroGraphic() {
+  const containerRef = useRef<SVGSVGElement>(null);
+  const [size, setSize] = useState({ w: 0, h: 0 });
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const ro = new ResizeObserver(([entry]) => {
+      const { width, height } = entry.contentRect;
+      setSize({ w: width, h: height });
+    });
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+
+  const { w, h } = size;
+  const ready = w > 0 && h > 0;
+
+  // Center of the VinoHub logo
+  const lx = w * 0.5;
+  const ly = h * 0.5;
+
+  // Compute pixel positions for each node
+  const nodes = NODE_DEFS.map((n, i) => ({
+    ...n,
+    x: w * n.fx,
+    y: h * n.fy,
+    clipId: `clip-node-${i}`,
+  }));
 
   return (
-    <div className="absolute inset-0 overflow-hidden">
-      {/* SVG layer for connecting curves + traveling dots */}
-      <svg
-        viewBox={`0 0 ${W} ${H}`}
-        className="absolute inset-0 h-full w-full"
-        preserveAspectRatio="none"
-        aria-hidden
-      >
-        <defs>
-          <radialGradient id="dotGlow" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stopColor="#fff" stopOpacity="1" />
-            <stop offset="60%" stopColor="#fff" stopOpacity="0.6" />
-            <stop offset="100%" stopColor="#fff" stopOpacity="0" />
-          </radialGradient>
-        </defs>
+    <svg
+      ref={containerRef}
+      className="absolute inset-0 h-full w-full"
+      aria-hidden
+    >
+      <defs>
+        <radialGradient id="centerGlow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%"   stopColor="#fff" stopOpacity="0.18" />
+          <stop offset="100%" stopColor="#fff" stopOpacity="0" />
+        </radialGradient>
+        <radialGradient id="dotGlow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%"   stopColor="#fff" stopOpacity="1" />
+          <stop offset="60%"  stopColor="#fff" stopOpacity="0.5" />
+          <stop offset="100%" stopColor="#fff" stopOpacity="0" />
+        </radialGradient>
+        {ready && nodes.map((n) => (
+          <clipPath key={n.clipId} id={n.clipId}>
+            <circle cx={n.x} cy={n.y} r={n.r} />
+          </clipPath>
+        ))}
+      </defs>
 
-        {nodes.map((n, i) => {
-          const path = `M ${n.x + n.size / 2} ${n.y + n.size / 2} Q ${n.cx} ${n.cy} ${cx} ${cy}`;
-          const pathId = `svc-path-${i}`;
-          return (
-            <g key={i}>
-              <path
-                id={pathId}
-                d={path}
-                fill="none"
-                stroke="rgba(255,255,255,0.35)"
-                strokeWidth="1"
-              />
-              {/* Glow halo behind the dot */}
-              <circle r="9" fill="url(#dotGlow)">
-                <animateMotion
-                  dur={`${n.duration}s`}
-                  begin={`${n.delay}s`}
-                  repeatCount="indefinite"
-                  rotate="auto"
-                >
-                  <mpath href={`#${pathId}`} />
-                </animateMotion>
-              </circle>
-              {/* Bright traveling dot */}
-              <circle r="3" fill="#fff">
-                <animateMotion
-                  dur={`${n.duration}s`}
-                  begin={`${n.delay}s`}
-                  repeatCount="indefinite"
-                  rotate="auto"
-                >
-                  <mpath href={`#${pathId}`} />
-                </animateMotion>
-              </circle>
-            </g>
-          );
-        })}
-      </svg>
-
-      {/* Bottle nodes (centered on their viewBox coordinate) */}
-      {nodes.map((n, i) => (
-        <motion.div
-          key={i}
-          className="absolute"
-          style={{
-            left: `${((n.x + n.size / 2) / W) * 100}%`,
-            top: `${((n.y + n.size / 2) / H) * 100}%`,
-            width: `${(n.size / W) * 100}%`,
-            aspectRatio: "1 / 1",
-            transform: "translate(-50%, -50%)",
-          }}
-          initial={{ opacity: 0, scale: 0.6 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.6, delay: 0.1 * i, ease: "easeOut" }}
-        >
-          <div className="relative h-full w-full overflow-hidden rounded-full ring-1 ring-white/30">
-            <img src={n.img} alt="" className="h-full w-full object-cover" />
-          </div>
-        </motion.div>
-      ))}
-
-      {/* Center VinoHub logo */}
-      <div
-        className="absolute"
-        style={{
-          left: `${(cx / W) * 100}%`,
-          top: `${(cy / H) * 100}%`,
-          transform: "translate(-50%, -50%)",
-        }}
-      >
-        <div className="flex h-[180px] w-[360px] items-center justify-center rounded-full bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.25)_0%,rgba(255,255,255,0)_70%)]">
-          <img
-            src={assets.vinoHubWordmark}
-            alt="VinoHub"
-            width={146}
-            height={35}
-            className="h-[35px] w-auto brightness-0 invert"
+      {ready && (
+        <>
+          {/* Radial glow behind logo */}
+          <ellipse
+            cx={lx} cy={ly}
+            rx={180} ry={100}
+            fill="url(#centerGlow)"
           />
-        </div>
-      </div>
-    </div>
+
+          {nodes.map((n, i) => {
+            // Control point: pull line gently toward center but arc outward slightly
+            const qx = (n.x + lx) / 2 + (ly - n.y) * 0.15;
+            const qy = (n.y + ly) / 2 + (lx - n.x) * 0.08;
+            const pathD = `M ${n.x} ${n.y} Q ${qx} ${qy} ${lx} ${ly}`;
+            const pathId = `line-${i}`;
+
+            return (
+              <g key={i}>
+                {/* Connecting line */}
+                <path
+                  id={pathId}
+                  d={pathD}
+                  fill="none"
+                  stroke="rgba(255,255,255,0.3)"
+                  strokeWidth="1"
+                />
+
+                {/* Glow halo on traveling dot */}
+                <circle r="10" fill="url(#dotGlow)">
+                  <animateMotion
+                    dur={`${n.dur}s`}
+                    begin={`${n.delay}s`}
+                    repeatCount="indefinite"
+                  >
+                    <mpath href={`#${pathId}`} />
+                  </animateMotion>
+                </circle>
+
+                {/* Bright dot */}
+                <circle r="3" fill="#fff">
+                  <animateMotion
+                    dur={`${n.dur}s`}
+                    begin={`${n.delay}s`}
+                    repeatCount="indefinite"
+                  >
+                    <mpath href={`#${pathId}`} />
+                  </animateMotion>
+                </circle>
+
+                {/* Bottle image clipped to circle */}
+                <image
+                  href={n.img}
+                  x={n.x - n.r}
+                  y={n.y - n.r}
+                  width={n.r * 2}
+                  height={n.r * 2}
+                  preserveAspectRatio="xMidYMid slice"
+                  clipPath={`url(#${n.clipId})`}
+                />
+
+                {/* Ring around circle */}
+                <circle
+                  cx={n.x} cy={n.y} r={n.r}
+                  fill="none"
+                  stroke="rgba(255,255,255,0.35)"
+                  strokeWidth="1"
+                />
+              </g>
+            );
+          })}
+
+          {/* VinoHub wordmark at center */}
+          <image
+            href={assets.vinoHubWordmark}
+            x={lx - 73}
+            y={ly - 17}
+            width={146}
+            height={34}
+            style={{ filter: "brightness(0) invert(1)" }}
+          />
+        </>
+      )}
+    </svg>
   );
 }
