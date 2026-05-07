@@ -5,13 +5,14 @@ import Testimonials from "@/components/testimonials";
 import ChatFlow from "@/components/chat-flow";
 import { CTAButton, Nav, Footer } from "@/components/site-chrome";
 import ScrollRevealGrid from "@/components/scroll-reveal-grid";
+import StickyGridScroll from "@/components/sticky-grid-scroll";
 
 export default function Home() {
   return (
     <main className="bg-bg">
       <Hero />
       {/* <Testimonials /> */}
-      <PortfolioBreeze />
+      <PortfolioStickyGrid />
       <FeatureCards />
       <ConsultationCTA />
       <WebsiteGallery />
@@ -22,7 +23,7 @@ export default function Home() {
 
 function Hero() {
   return (
-    <section className="relative w-full overflow-hidden">
+    <section className="relative z-10 w-full overflow-hidden bg-bg">
       {/* Layer 1: Sky */}
       <img
         src={assets.heroSky}
@@ -111,94 +112,36 @@ function Hero() {
   );
 }
 
-function PortfolioBreeze() {
+const GRID_IMAGES = [
+  assets.dashCard1,
+  assets.vineyardCard,
+  assets.dashCard2,
+  assets.hubScreenshot,
+  assets.salesSheetScreenshot,
+  assets.siteShot1,
+  assets.siteShot2,
+  assets.siteShot3,
+  assets.siteShot4,
+];
+
+function PortfolioStickyGrid() {
   return (
-    <section className="relative mx-auto max-w-[1300px] px-6 py-24">
-      <div className="relative mx-auto max-w-[900px] text-center">
-        <div className="pointer-events-none absolute -left-32 top-4 hidden md:block">
-          <img src={assets.bottle2} alt="" className="h-[196px] w-[61px] object-contain" />
-        </div>
-        <div className="pointer-events-none absolute -right-10 -top-10 hidden md:block">
-          <img src={assets.bottle1} alt="" className="h-[246px] w-[77px] object-contain" />
-        </div>
-
-
-        <h2 className="text-[clamp(32px,4.5vw,50px)] font-medium leading-[1.18] tracking-[-1.5px] text-ink">
-          <StaggeredText
-            as="span"
-            className="justify-center"
-            text="With us, portfolio management is a breeze."
-            segmentBy="words"
-            delay={70}
-            duration={0.7}
-            direction="top"
-            blur
-          />
-        </h2>
-        <p className="mx-auto mt-6 max-w-[549px] text-[19px] leading-[28px] tracking-[-0.19px] text-muted">
-          Update all your wine inventory from a single source of truth all from a
-          beautiful dashboard that anyone can use.
-        </p>
-        <CTAButton href="#demo" variant="light" className="mt-8">
+    <StickyGridScroll
+      images={GRID_IMAGES}
+      title={
+        <>
+          <div>With us, portfolio</div>
+          <div>management is</div>
+          <div className="font-serif italic font-normal">a breeze.</div>
+        </>
+      }
+      description="Update all your wine inventory from a single source of truth — all from a beautiful dashboard that anyone can use."
+      cta={
+        <CTAButton href="#demo" variant="light">
           View The Demo
         </CTAButton>
-      </div>
-
-      <ScrollRevealGrid
-        className="mt-16"
-        gridClassName="grid grid-cols-2 md:grid-cols-4 auto-rows-[180px] gap-4"
-        cells={[
-          {
-            content: (
-              <img
-                src={assets.dashCard1}
-                alt=""
-                className="h-full w-full rounded-[12px] border border-[#b9b9b9] object-cover"
-              />
-            ),
-          },
-          {
-            className: "row-span-2 flex items-center justify-center rounded-[12px] bg-[#efe7d7]",
-            content: (
-              <img
-                src={assets.bottle3}
-                alt=""
-                className="h-[280px] w-auto object-contain"
-              />
-            ),
-          },
-          {
-            content: (
-              <img
-                src={assets.vineyardCard}
-                alt=""
-                className="h-full w-full rounded-[12px] object-cover"
-              />
-            ),
-          },
-          {
-            className: "row-span-2",
-            content: (
-              <img
-                src={assets.dashCard2}
-                alt=""
-                className="h-full w-full rounded-[12px] border border-[#b9b9b9] object-cover"
-              />
-            ),
-          },
-          {
-            className: "col-span-2",
-            content: (
-              <img
-                src={assets.hubScreenshot}
-                alt=""
-                className="h-full w-full rounded-[12px] border border-[#b9b9b9] object-cover"
-              />
-            ),
-          },
-        ]}
-      />
-    </section>
+      }
+    />
   );
 }
 
