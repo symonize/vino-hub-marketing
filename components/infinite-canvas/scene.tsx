@@ -218,7 +218,12 @@ const createInitialState = (camZ: number): ControllerState => ({
   pendingChunk: null,
 });
 
-function SceneController({ media, onTextureProgress }: { media: MediaItem[]; onTextureProgress?: (progress: number) => void }) {
+function SceneController({ media, onTextureProgress, externalCameraZRef, disableWheel }: {
+  media: MediaItem[];
+  onTextureProgress?: (progress: number) => void;
+  externalCameraZRef?: React.RefObject<number>;
+  disableWheel?: boolean;
+}) {
   const { camera, gl } = useThree();
   const isTouchDevice = useIsTouchDevice();
   const [, getKeys] = useKeyboardControls<keyof KeyboardKeys>();
@@ -254,7 +259,7 @@ function SceneController({ media, onTextureProgress }: { media: MediaItem[]; onT
         s.lastMouse = { x: e.clientX, y: e.clientY };
       }
     };
-    const onWheel = (e: WheelEvent) => { e.preventDefault(); s.scrollAccum += e.deltaY * 0.006; };
+    const onWheel = (e: WheelEvent) => { if (disableWheel) return; e.preventDefault(); s.scrollAccum += e.deltaY * 0.006; };
     const onTouchStart = (e: TouchEvent) => { e.preventDefault(); s.lastTouches = Array.from(e.touches); s.lastTouchDist = getTouchDistance(s.lastTouches); setCursor("grabbing"); };
     const onTouchMove = (e: TouchEvent) => {
       e.preventDefault();
@@ -317,26 +322,35 @@ function SceneController({ media, onTextureProgress }: { media: MediaItem[]; onT
       }
     }
 
-    s.targetVel.z += s.scrollAccum;
-    s.scrollAccum *= 0.8;
+    // If scroll is driven externally, snap camera Z directly and skip Z physics
+    if (externalCameraZRef) {
+      const targetZ = externalCameraZRef.current ?? INITIAL_CAMERA_Z;
+      s.basePos.z = lerp(s.basePos.z, targetZ, 0.08);
+      s.velocity.z = 0;
+      s.targetVel.z = 0;
+      s.scrollAccum = 0;
+    } else {
+      s.targetVel.z += s.scrollAccum;
+      s.scrollAccum *= 0.8;
+      s.targetVel.z = clamp(s.targetVel.z, -MAX_VELOCITY, MAX_VELOCITY);
+      s.velocity.z = lerp(s.velocity.z, s.targetVel.z, VELOCITY_LERP);
+      s.basePos.z += s.velocity.z;
+      s.targetVel.z *= VELOCITY_DECAY;
+    }
 
     s.targetVel.x = clamp(s.targetVel.x, -MAX_VELOCITY, MAX_VELOCITY);
     s.targetVel.y = clamp(s.targetVel.y, -MAX_VELOCITY, MAX_VELOCITY);
-    s.targetVel.z = clamp(s.targetVel.z, -MAX_VELOCITY, MAX_VELOCITY);
 
     s.velocity.x = lerp(s.velocity.x, s.targetVel.x, VELOCITY_LERP);
     s.velocity.y = lerp(s.velocity.y, s.targetVel.y, VELOCITY_LERP);
-    s.velocity.z = lerp(s.velocity.z, s.targetVel.z, VELOCITY_LERP);
 
     s.basePos.x += s.velocity.x;
     s.basePos.y += s.velocity.y;
-    s.basePos.z += s.velocity.z;
 
     camera.position.set(s.basePos.x + s.drift.x, s.basePos.y + s.drift.y, s.basePos.z);
 
     s.targetVel.x *= VELOCITY_DECAY;
     s.targetVel.y *= VELOCITY_DECAY;
-    s.targetVel.z *= VELOCITY_DECAY;
 
     const cx = Math.floor(s.basePos.x / CHUNK_SIZE);
     const cy = Math.floor(s.basePos.y / CHUNK_SIZE);
@@ -382,6 +396,8 @@ export function InfiniteCanvasScene({
   fogFar = 320,
   backgroundColor = "#7f3333",
   fogColor = "#7f3333",
+  externalCameraZRef,
+  disableWheel,
 }: InfiniteCanvasProps) {
   const isTouchDevice = useIsTouchDevice();
   const dpr = typeof window !== "undefined" ? Math.min(window.devicePixelRatio || 1, isTouchDevice ? 1.25 : 1.5) : 1;
@@ -401,7 +417,7 @@ export function InfiniteCanvasScene({
         >
           <color attach="background" args={[backgroundColor]} />
           <fog attach="fog" args={[fogColor, fogNear, fogFar]} />
-          <SceneController media={media} onTextureProgress={onTextureProgress} />
+          <SceneController media={media} onTextureProgress={onTextureProgress} externalCameraZRef={externalCameraZRef} disableWheel={disableWheel} />
           {showFps && <Stats />}
         </Canvas>
       </div>

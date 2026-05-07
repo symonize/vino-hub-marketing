@@ -18,6 +18,10 @@ export type InfiniteCanvasProps = {
   fogFar?: number;
   backgroundColor?: string;
   fogColor?: string;
+  /** When provided, overrides scroll-based camera Z with this ref value each frame */
+  externalCameraZRef?: React.RefObject<number>;
+  /** When true, disables the canvas wheel listener (scroll is driven externally) */
+  disableWheel?: boolean;
 };
 
 export type ChunkData = {

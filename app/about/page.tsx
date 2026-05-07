@@ -1,5 +1,6 @@
 "use client";
 
+import * as React from "react";
 import { useState } from "react";
 import { motion } from "motion/react";
 import StaggeredText from "@/components/react-bits/staggered-text";
@@ -63,60 +64,94 @@ export default function AboutPage() {
 }
 
 const CANVAS_MEDIA = [
-  { url: "/assets/site-shot1.png",           width: 323,  height: 579 },
-  { url: "/assets/site-shot2.png",           width: 387,  height: 579 },
-  { url: "/assets/site-shot3.png",           width: 516,  height: 579 },
-  { url: "/assets/site-shot4.png",           width: 579,  height: 579 },
-  { url: "/assets/hub-screenshot.png",       width: 232,  height: 174 },
-  { url: "/assets/dashboard.webp",           width: 1200, height: 840 },
-  { url: "/assets/vineyard-card.png",        width: 600,  height: 400 },
-  { url: "/assets/dash-card1.png",           width: 500,  height: 500 },
-  { url: "/assets/dash-card2.png",           width: 500,  height: 226 },
-  { url: "/assets/sales-sheet-screenshot.png", width: 400, height: 266 },
+  { url: "/assets/site-shot1.png",             width: 323,  height: 579 },
+  { url: "/assets/site-shot2.png",             width: 387,  height: 579 },
+  { url: "/assets/site-shot3.png",             width: 516,  height: 579 },
+  { url: "/assets/site-shot4.png",             width: 579,  height: 579 },
+  { url: "/assets/hub-screenshot.png",         width: 232,  height: 174 },
+  { url: "/assets/dashboard.webp",             width: 1200, height: 840 },
+  { url: "/assets/vineyard-card.png",          width: 600,  height: 400 },
+  { url: "/assets/dash-card1.png",             width: 500,  height: 500 },
+  { url: "/assets/dash-card2.png",             width: 500,  height: 226 },
+  { url: "/assets/sales-sheet-screenshot.png", width: 400,  height: 266 },
 ];
 
-function AboutHero() {
-  return (
-    <section className="relative h-screen w-full overflow-hidden">
-      {/* Infinite canvas fills the full viewport */}
-      <InfiniteCanvas
-        media={CANVAS_MEDIA}
-        backgroundColor="#7f3333"
-        fogColor="#7f3333"
-        fogNear={100}
-        fogFar={280}
-      />
+// Camera zooms from INITIAL_CAMERA_Z (50) toward this value at full scroll
+const CAMERA_Z_START = 50;
+const CAMERA_Z_END   = 5;
+// How many vh of scroll distance the animation plays over
+const SCROLL_DISTANCE_VH = 200;
 
-      {/* Centered headline overlay */}
-      <div className="pointer-events-none absolute inset-0 z-10 flex flex-col items-center justify-center px-6 text-center">
-        <h1 className="text-[clamp(40px,5.6vw,72px)] font-medium leading-[1.08] tracking-[-1.86px] text-white drop-shadow-lg">
-          <div>
-            <StaggeredText
-              as="span"
-              className="justify-center"
-              text="We specialize in making the"
-              segmentBy="words"
-              delay={60}
-              duration={0.7}
-              direction="top"
-              blur
-            />
-          </div>
-          <div>
-            <StaggeredText
-              as="span"
-              className="justify-center font-serif italic font-normal"
-              text="complex feel simple"
-              segmentBy="words"
-              delay={60}
-              duration={0.7}
-              direction="top"
-              blur
-            />
-          </div>
-        </h1>
+function AboutHero() {
+  const cameraZRef = React.useRef<number>(CAMERA_Z_START);
+  const wrapperRef = React.useRef<HTMLDivElement>(null);
+
+  React.useEffect(() => {
+    const onScroll = () => {
+      const wrapper = wrapperRef.current;
+      if (!wrapper) return;
+      const { top, height } = wrapper.getBoundingClientRect();
+      // progress 0 → 1 over the scrollable sticky range
+      const scrollRange = height - window.innerHeight;
+      const scrolled = -top;
+      const progress = Math.max(0, Math.min(1, scrolled / scrollRange));
+      cameraZRef.current = CAMERA_Z_START + (CAMERA_Z_END - CAMERA_Z_START) * progress;
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  return (
+    // Tall wrapper — creates the scroll distance while the canvas stays sticky
+    <div
+      ref={wrapperRef}
+      style={{ height: `${SCROLL_DISTANCE_VH}vh` }}
+    >
+      {/* Sticky panel — stays in view while user scrolls through the wrapper */}
+      <div className="sticky top-0 h-screen w-full overflow-hidden">
+        <InfiniteCanvas
+          media={CANVAS_MEDIA}
+          backgroundColor="#7f3333"
+          fogColor="#7f3333"
+          fogNear={100}
+          fogFar={280}
+          externalCameraZRef={cameraZRef}
+          disableWheel
+        />
+
+        {/* Headline overlay */}
+        <div className="pointer-events-none absolute inset-0 z-10 flex flex-col items-center justify-center px-6 text-center">
+          <h1 className="text-[clamp(40px,5.6vw,72px)] font-medium leading-[1.08] tracking-[-1.86px] text-white drop-shadow-lg">
+            <div>
+              <StaggeredText
+                as="span"
+                className="justify-center"
+                text="We specialize in making the"
+                segmentBy="words"
+                delay={60}
+                duration={0.7}
+                direction="top"
+                blur
+              />
+            </div>
+            <div>
+              <StaggeredText
+                as="span"
+                className="justify-center font-serif italic font-normal"
+                text="complex feel simple"
+                segmentBy="words"
+                delay={60}
+                duration={0.7}
+                direction="top"
+                blur
+              />
+            </div>
+          </h1>
+        </div>
       </div>
-    </section>
+    </div>
   );
 }
 
