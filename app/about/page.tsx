@@ -64,16 +64,20 @@ export default function AboutPage() {
 }
 
 const CANVAS_MEDIA = [
-  { url: "/assets/site-shot1.png",             width: 323,  height: 579 },
-  { url: "/assets/site-shot2.png",             width: 387,  height: 579 },
-  { url: "/assets/site-shot3.png",             width: 516,  height: 579 },
-  { url: "/assets/site-shot4.png",             width: 579,  height: 579 },
-  { url: "/assets/hub-screenshot.png",         width: 232,  height: 174 },
-  { url: "/assets/dashboard.webp",             width: 1200, height: 840 },
-  { url: "/assets/vineyard-card.png",          width: 600,  height: 400 },
-  { url: "/assets/dash-card1.png",             width: 500,  height: 500 },
-  { url: "/assets/dash-card2.png",             width: 500,  height: 226 },
-  { url: "/assets/sales-sheet-screenshot.png", width: 400,  height: 266 },
+  { url: "/assets/site-shot1.png",              width: 323,  height: 579 },
+  { url: "/assets/site-shot2.png",              width: 387,  height: 579 },
+  { url: "/assets/bottles/asset 4.webp",        width: 300,  height: 600 },
+  { url: "/assets/site-shot3.png",              width: 516,  height: 579 },
+  { url: "/assets/bottles/asset 6.webp",        width: 300,  height: 600 },
+  { url: "/assets/site-shot4.png",              width: 579,  height: 579 },
+  { url: "/assets/hub-screenshot.png",          width: 232,  height: 174 },
+  { url: "/assets/bottles/asset 8.webp",        width: 300,  height: 600 },
+  { url: "/assets/dashboard.webp",              width: 1200, height: 840 },
+  { url: "/assets/vineyard-card.png",           width: 600,  height: 400 },
+  { url: "/assets/bottles/asset 10.webp",       width: 300,  height: 600 },
+  { url: "/assets/dash-card1.png",              width: 500,  height: 500 },
+  { url: "/assets/dash-card2.png",              width: 500,  height: 226 },
+  { url: "/assets/sales-sheet-screenshot.png",  width: 400,  height: 266 },
 ];
 
 // Camera zooms from INITIAL_CAMERA_Z (50) toward this value at full scroll
