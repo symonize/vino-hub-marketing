@@ -10,7 +10,7 @@ export default function Home() {
   return (
     <main className="bg-bg">
       <Hero />
-      <Testimonials />
+      {/* <Testimonials /> */}
       <PortfolioBreeze />
       <FeatureCards />
       <ConsultationCTA />
