@@ -1,3 +1,5 @@
+"use client";
+import { motion } from "motion/react";
 import { assets } from "./assets";
 import StaggeredText from "@/components/react-bits/staggered-text";
 import VariableProximityText from "@/components/react-bits/variable-proximity-text";
@@ -100,10 +102,13 @@ function Hero() {
 
         {/* Layer 2: Dashboard — in normal flow, below text, behind vineyard via z-index */}
         <div className="relative z-[2] w-full max-w-[860px] px-6 pb-[18%]">
-          <img
+          <motion.img
             src={assets.heroDashboard}
             alt="VinoHub dashboard"
             className="w-full rounded-[12px] shadow-2xl shadow-black/50"
+            initial={{ opacity: 0, filter: "blur(16px)", y: 24 }}
+            animate={{ opacity: 1, filter: "blur(0px)", y: 0 }}
+            transition={{ duration: 1.1, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
           />
         </div>
 
