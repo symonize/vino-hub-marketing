@@ -46,7 +46,7 @@ type NavItem = { label: string; href?: string; cal?: boolean };
 const NAV_LINKS: NavItem[] = [
   { label: "Services", href: "/services" },
   { label: "Free Consultation", href: "/consult" },
-  { label: "Pricing", href: "/pricing" },
+  // { label: "Pricing", href: "/pricing" },
   { label: "About", href: "/about" },
   { label: "Contact", href: "/#contact" },
 ];
