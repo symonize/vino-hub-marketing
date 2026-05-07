@@ -90,13 +90,13 @@ export default function StickyGridScroll({ images, title, description, cta }: St
     });
 
     const zoomTl = gsap.timeline({ defaults: { duration: 1, ease: "power3.inOut" } });
-    zoomTl.to(grid, { scale: 2.05 });
-    zoomTl.to(columns[0], { xPercent: -40 }, "<");
-    zoomTl.to(columns[2], { xPercent: 40 }, "<");
+    zoomTl.to(grid, { scale: 2.6 });
+    zoomTl.to(columns[0], { xPercent: -65 }, "<");
+    zoomTl.to(columns[2], { xPercent: 65 }, "<");
     zoomTl.to(
       columns[1],
       {
-        yPercent: (i) => (i < Math.floor(columns[1].length / 2) ? -1 : 1) * 40,
+        yPercent: (i) => (i < Math.floor(columns[1].length / 2) ? -1 : 1) * 70,
         duration: 0.5,
         ease: "power1.inOut",
       },
@@ -174,7 +174,7 @@ export default function StickyGridScroll({ images, title, description, cta }: St
         {/* Gallery grid */}
         <div
           className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
-          style={{ width: "min(736px, 90vw)" }}
+          style={{ width: "min(580px, 72vw)" }}
         >
           <ul
             ref={gridRef}
