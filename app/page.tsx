@@ -118,15 +118,15 @@ function Hero() {
 }
 
 const GRID_IMAGES = [
+  assets.newBottle1,
+  assets.newBottle3,
   assets.dashCard1,
-  assets.vineyardCard,
-  assets.dashCard2,
+  assets.newBottle5,
   assets.hubScreenshot,
+  assets.newBottle7,
   assets.salesSheetScreenshot,
-  assets.siteShot1,
-  assets.siteShot2,
-  assets.siteShot3,
-  assets.siteShot4,
+  assets.newBottle9,
+  assets.newBottle2,
 ];
 
 function PortfolioStickyGrid() {
