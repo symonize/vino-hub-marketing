@@ -32,7 +32,7 @@ function ServicesHero() {
     <section className="px-[34px] pt-[28px]">
       <div className="relative mx-auto h-[861px] w-full overflow-hidden rounded-[25px] bg-[#7f3333]">
         {/* Background graphic with bottle nodes + animated lines */}
-        <div className="absolute inset-x-0 top-[420px] bottom-0">
+        <div className="absolute inset-x-0 top-[560px] bottom-0">
           <ServicesHeroGraphic />
         </div>
 
