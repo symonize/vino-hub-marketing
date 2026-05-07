@@ -388,13 +388,28 @@ function WebsiteGallery() {
       </div>
 
       <div className="relative mt-12 overflow-hidden">
-        <div className="flex gap-6">
-          {shots.map((src, i) => (
-            <div key={i} className="h-[423px] flex-shrink-0 overflow-hidden rounded-[12px]" style={{ width: i === 3 ? 234 : 300 }}>
+        <style>{`
+          @keyframes marquee {
+            from { transform: translateX(0); }
+            to   { transform: translateX(-50%); }
+          }
+          .marquee-track {
+            display: flex;
+            gap: 24px;
+            width: max-content;
+            animation: marquee 28s linear infinite;
+          }
+          .marquee-track:hover { animation-play-state: paused; }
+        `}</style>
+
+        <div className="marquee-track">
+          {[...shots, ...shots].map((src, i) => (
+            <div key={i} className="h-[423px] flex-shrink-0 overflow-hidden rounded-[12px]" style={{ width: 320 }}>
               <img src={src} alt="" className="h-full w-full object-cover" />
             </div>
           ))}
         </div>
+
         <div className="pointer-events-none absolute inset-y-0 left-0 w-[150px] bg-gradient-to-r from-bg to-transparent" />
         <div className="pointer-events-none absolute inset-y-0 right-0 w-[150px] bg-gradient-to-l from-bg to-transparent" />
       </div>
