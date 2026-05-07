@@ -50,13 +50,6 @@ function Hero() {
 
         {/* Hero text */}
         <div id="demo" className="mx-auto flex max-w-[1100px] flex-col items-center px-6 pt-[200px] pb-12 text-center">
-          <div className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/20 px-3 py-2 backdrop-blur-sm">
-            <img src={assets.aiIcon} alt="" className="h-[18px] w-[18px]" />
-            <span className="text-[17px] font-medium text-white tracking-[-0.17px]">
-              Introducing VinoAI
-            </span>
-          </div>
-
           <h1 className="mt-8 flex max-w-[900px] flex-wrap justify-center gap-x-[0.28em] text-[clamp(40px,6vw,62px)] font-medium leading-[1.09] tracking-[-1.86px] text-white">
             <StaggeredText as="span" text="The" segmentBy="words" delay={60} duration={0.7} direction="top" blur />
             <StaggeredText
