@@ -80,7 +80,7 @@ const CANVAS_MEDIA = [
 const CAMERA_Z_START = 50;
 const CAMERA_Z_END   = 5;
 // How many vh of scroll distance the animation plays over
-const SCROLL_DISTANCE_VH = 200;
+const SCROLL_DISTANCE_VH = 300;
 
 function AboutHero() {
   const cameraZRef = React.useRef<number>(CAMERA_Z_START);
