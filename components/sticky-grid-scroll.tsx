@@ -59,11 +59,12 @@ export default function StickyGridScroll({ images, title, description, cta }: St
       },
     });
 
-    // --- Title fade in ---
+    // --- Title blur + fade in ---
     gsap.from(title, {
       opacity: 0,
-      duration: 0.7,
-      ease: "power1.out",
+      filter: "blur(12px)",
+      duration: 0.9,
+      ease: "power2.out",
       scrollTrigger: {
         trigger: block,
         start: "top 57%",
