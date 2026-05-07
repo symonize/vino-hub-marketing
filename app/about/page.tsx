@@ -6,6 +6,7 @@ import StaggeredText from "@/components/react-bits/staggered-text";
 import BlurHighlight from "@/components/react-bits/blur-highlight";
 import { CTAButton, Nav, Footer } from "@/components/site-chrome";
 import TeamModal, { type TeamMember } from "@/components/team-modal";
+import { InfiniteCanvas } from "@/components/infinite-canvas";
 
 const TEAM: TeamMember[] = [
   {
@@ -61,59 +62,59 @@ export default function AboutPage() {
   );
 }
 
+const CANVAS_MEDIA = [
+  { url: "/assets/site-shot1.png",           width: 323,  height: 579 },
+  { url: "/assets/site-shot2.png",           width: 387,  height: 579 },
+  { url: "/assets/site-shot3.png",           width: 516,  height: 579 },
+  { url: "/assets/site-shot4.png",           width: 579,  height: 579 },
+  { url: "/assets/hub-screenshot.png",       width: 232,  height: 174 },
+  { url: "/assets/dashboard.webp",           width: 1200, height: 840 },
+  { url: "/assets/vineyard-card.png",        width: 600,  height: 400 },
+  { url: "/assets/dash-card1.png",           width: 500,  height: 500 },
+  { url: "/assets/dash-card2.png",           width: 500,  height: 226 },
+  { url: "/assets/sales-sheet-screenshot.png", width: 400, height: 266 },
+];
+
 function AboutHero() {
   return (
-    <section className="px-6 pt-[160px]">
-      <div className="mx-auto max-w-[1100px]">
-        <h1 className="text-[clamp(40px,5.6vw,62px)] font-medium leading-[1.1] tracking-[-1.86px] text-[#353535]">
-          <StaggeredText
-            as="span"
-            className=""
-            text="We specialize in making the"
-            segmentBy="words"
-            delay={60}
-            duration={0.7}
-            direction="top"
-            blur
-          />
-          <StaggeredText
-            as="span"
-            className="font-serif italic font-normal"
-            text="complex feel simple"
-            segmentBy="words"
-            delay={60}
-            duration={0.7}
-            direction="top"
-            blur
-          />
+    <section className="relative h-screen w-full overflow-hidden">
+      {/* Infinite canvas fills the full viewport */}
+      <InfiniteCanvas
+        media={CANVAS_MEDIA}
+        backgroundColor="#7f3333"
+        fogColor="#7f3333"
+        fogNear={100}
+        fogFar={280}
+      />
+
+      {/* Centered headline overlay */}
+      <div className="pointer-events-none absolute inset-0 z-10 flex flex-col items-center justify-center px-6 text-center">
+        <h1 className="text-[clamp(40px,5.6vw,72px)] font-medium leading-[1.08] tracking-[-1.86px] text-white drop-shadow-lg">
+          <div>
+            <StaggeredText
+              as="span"
+              className="justify-center"
+              text="We specialize in making the"
+              segmentBy="words"
+              delay={60}
+              duration={0.7}
+              direction="top"
+              blur
+            />
+          </div>
+          <div>
+            <StaggeredText
+              as="span"
+              className="justify-center font-serif italic font-normal"
+              text="complex feel simple"
+              segmentBy="words"
+              delay={60}
+              duration={0.7}
+              direction="top"
+              blur
+            />
+          </div>
         </h1>
-
-        <div className="mt-10 max-w-[828px] text-[20px] leading-[28px] tracking-[-0.2px] text-[#6d6d6d]">
-          <BlurHighlight
-            highlightedBits={[
-              "15 years of combined experience",
-              "the nation's largest distributor",
-              "independent importers",
-            ]}
-            highlightColor="#7f3333"
-            highlightClassName="text-white font-medium px-1 -mx-1 rounded-[3px]"
-            highlightDirection="left"
-            highlightDuration={1.6}
-            highlightDelay={1.2}
-            blurDuration={0.6}
-            viewportOptions={{ once: true, amount: 0.3 }}
-          >
-            With more than 15 years of combined experience, we deliver digital
-            strategies built exclusively for the wine world. Our industry
-            expertise is built on a professional background that spans the
-            entire industry: we bring to the table the firsthand experience of
-            working within the technical infrastructure of the nation&apos;s
-            largest distributor, as well as managing the digital strategies of
-            independent importers.
-          </BlurHighlight>
-        </div>
-
-        <div className="mt-12 border-t border-dashed border-black/15" />
       </div>
     </section>
   );
