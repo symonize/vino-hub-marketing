@@ -96,7 +96,7 @@ export default function StickyGridScroll({ images, title, description, cta }: St
     zoomTl.to(
       columns[1],
       {
-        yPercent: (i) => (i < Math.floor(columns[1].length / 2) ? -1 : 1) * 70,
+        yPercent: (i) => (i < Math.floor(columns[1].length / 2) ? -1 : 1) * 110,
         duration: 0.5,
         ease: "power1.inOut",
       },
