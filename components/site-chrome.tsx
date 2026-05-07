@@ -138,9 +138,9 @@ export function Footer() {
             Services
           </h4>
           <ul className="mt-4 space-y-2 text-[20px] font-medium tracking-[-0.2px] text-[#535353]">
-            <li>Wine Asset Management</li>
-            <li>Website Design &amp; Dev</li>
-            <li>AI Solutions</li>
+            <li><a href="/services#hub" className="transition-colors hover:text-black">Wine Asset Management</a></li>
+            <li><a href="/services#web" className="transition-colors hover:text-black">Website Design &amp; Dev</a></li>
+            <li><a href="/services#ai" className="transition-colors hover:text-black">AI Solutions</a></li>
           </ul>
         </div>
 
@@ -149,8 +149,8 @@ export function Footer() {
             About
           </h4>
           <ul className="mt-4 space-y-2 text-[20px] font-medium tracking-[-0.2px] text-[#535353]">
-            <li>Our Team</li>
-            <li>Contact Us</li>
+            <li><a href="/about" className="transition-colors hover:text-black">Our Team</a></li>
+            <li><a href="/consult" className="transition-colors hover:text-black">Contact Us</a></li>
           </ul>
         </div>
 
@@ -171,9 +171,9 @@ export function Footer() {
               <VariableProximityText label="Send" />
             </button>
           </form>
-          <p className="mt-6 text-[13px] tracking-[-0.13px] text-[#7e7e7e]">
+          <a href="/privacy" className="mt-6 inline-block text-[13px] tracking-[-0.13px] text-[#7e7e7e] transition-colors hover:text-black">
             Privacy Policy
-          </p>
+          </a>
         </div>
       </div>
 
