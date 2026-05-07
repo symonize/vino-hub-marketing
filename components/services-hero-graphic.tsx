@@ -93,16 +93,17 @@ export default function ServicesHeroGraphic() {
         })}
       </svg>
 
-      {/* Bottle nodes (positioned via % to track the same viewBox) */}
+      {/* Bottle nodes (centered on their viewBox coordinate) */}
       {nodes.map((n, i) => (
         <motion.div
           key={i}
           className="absolute"
           style={{
-            left: `${(n.x / W) * 100}%`,
-            top: `${(n.y / H) * 100}%`,
+            left: `${((n.x + n.size / 2) / W) * 100}%`,
+            top: `${((n.y + n.size / 2) / H) * 100}%`,
             width: `${(n.size / W) * 100}%`,
             aspectRatio: "1 / 1",
+            transform: "translate(-50%, -50%)",
           }}
           initial={{ opacity: 0, scale: 0.6 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -129,7 +130,7 @@ export default function ServicesHeroGraphic() {
             alt="VinoHub"
             width={146}
             height={35}
-            className="h-[35px] w-auto"
+            className="h-[35px] w-auto brightness-0 invert"
           />
         </div>
       </div>
