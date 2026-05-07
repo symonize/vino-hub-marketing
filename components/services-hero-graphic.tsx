@@ -43,7 +43,7 @@ export default function ServicesHeroGraphic() {
       <svg
         viewBox={`0 0 ${W} ${H}`}
         className="absolute inset-0 h-full w-full"
-        preserveAspectRatio="xMidYMid slice"
+        preserveAspectRatio="none"
         aria-hidden
       >
         <defs>
