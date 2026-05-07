@@ -39,26 +39,42 @@ function ServicesHero() {
         {/* Foreground heading + subheading */}
         <div className="relative z-10 mx-auto max-w-[820px] px-6 pt-[200px] text-center">
           <h1 className="text-[clamp(40px,5.6vw,62px)] font-medium leading-[1.1] tracking-[-1.86px] text-white">
-            <StaggeredText
-              as="span"
-              className="justify-center"
-              text="Digital Innovation Rooted in the"
-              segmentBy="words"
-              delay={60}
-              duration={0.7}
-              direction="top"
-              blur
-            />
-            <StaggeredText
-              as="span"
-              className="justify-center font-serif italic font-normal"
-              text="Wine Trade"
-              segmentBy="words"
-              delay={60}
-              duration={0.7}
-              direction="top"
-              blur
-            />
+            <div>
+              <StaggeredText
+                as="span"
+                className="justify-center"
+                text="Digital Innovation"
+                segmentBy="words"
+                delay={60}
+                duration={0.7}
+                direction="top"
+                blur
+              />
+            </div>
+            <div>
+              <StaggeredText
+                as="span"
+                className="justify-center"
+                text="Rooted in the"
+                segmentBy="words"
+                delay={60}
+                duration={0.7}
+                direction="top"
+                blur
+              />
+            </div>
+            <div>
+              <StaggeredText
+                as="span"
+                className="justify-center font-serif italic font-normal"
+                text="Wine Trade"
+                segmentBy="words"
+                delay={60}
+                duration={0.7}
+                direction="top"
+                blur
+              />
+            </div>
           </h1>
           <p className="mx-auto mt-8 max-w-[620px] text-[20px] leading-[28px] tracking-[-0.2px] text-white/85">
             In a crowded market, your digital workflow should be as premium as
