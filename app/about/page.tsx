@@ -26,6 +26,18 @@ const TEAM: TeamMember[] = [
       "Will absolutely die on the hill that Soave is one of Italy's most underrated whites. Don't get her started.",
   },
   {
+    id: "julian",
+    name: "Julian Dallmeier",
+    title: "AI Engineer & Data Strategist",
+    initials: "JD",
+    shortBio:
+      "PhD neuroscientist turned AI engineer — building wine-native intelligence before it was mainstream.",
+    fullBio: [
+      "Julian brings an international background to VinoHub, holding a PhD in Neuroscience from the University of Miami and a Master's degree from the University of Navarra, Spain. He has taught college-level Python programming and spent over a decade studying and working in Machine Learning: the foundational discipline that AI is built upon. Having worked with AI before it entered the mainstream conversation, Julian has the depth of experience and technical fluency to build tailored AI solutions that address the specific needs of the wine industry — not generic tools, but systems designed around how importers, producers, and distributors actually work.",
+      "He is also a specialist in data management: structuring and organizing complex wine portfolios, automating data workflows to eliminate repetitive manual work, and translating raw numbers into business decisions that are easy to understand and act on. At VinoHub, he applies that expertise directly to wine portfolio management, building intelligent systems that help importers and wineries organize their data, eliminate manual work, and operate with confidence and efficiency.",
+    ],
+  },
+  {
     id: "simon",
     name: "Simon Milberg",
     title: "Co-Founder & Head of Engineering",
