@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { assets } from "@/app/assets";
 import VariableProximityText from "@/components/react-bits/variable-proximity-text";
@@ -113,16 +113,46 @@ function HamburgerIcon({ open }: { open: boolean }) {
 }
 
 export function Nav() {
-  const [open, setOpen] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [featuresOpen, setFeaturesOpen] = useState(false);
+  const navRef = useRef<HTMLDivElement>(null);
+  const leaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    function handleMouseDown(e: MouseEvent) {
+      if (navRef.current && !navRef.current.contains(e.target as Node)) {
+        setFeaturesOpen(false);
+      }
+    }
+    function handleKeyDown(e: KeyboardEvent) {
+      if (e.key === "Escape") setFeaturesOpen(false);
+    }
+    document.addEventListener("mousedown", handleMouseDown);
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("mousedown", handleMouseDown);
+      document.removeEventListener("keydown", handleKeyDown);
+      if (leaveTimer.current) clearTimeout(leaveTimer.current);
+    };
+  }, []);
 
   return (
     <nav className="fixed top-0 left-1/2 -translate-x-1/2 z-20 w-[min(1100px,92%)]" style={{ marginRight: "var(--scrollbar-width, 0px)" }}>
-      <div className="relative">
+      <div
+        className="relative"
+        ref={navRef}
+        onMouseEnter={() => {
+          if (leaveTimer.current) clearTimeout(leaveTimer.current);
+        }}
+        onMouseLeave={() => {
+          leaveTimer.current = setTimeout(() => setFeaturesOpen(false), 150);
+        }}
+      >
         <NotchWing side="left" />
         <NotchWing side="right" />
       <motion.div
         className="overflow-hidden rounded-b-[32px] bg-white/70 backdrop-blur-md shadow-2xl shadow-black/20"
-        animate={{ height: open ? "auto" : 80 }}
+        animate={{ height: mobileOpen ? "auto" : 80 }}
         transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
       >
 
@@ -140,11 +170,26 @@ export function Nav() {
 
           {/* Desktop nav links */}
           <ul className="hidden md:flex items-center gap-1 text-sm font-medium text-ink/80">
-            {NAV_LINKS.map((l) => (
-              <li key={l.label}>
-                <NavLink label={l.label} href={l.href} cal={l.cal} />
-              </li>
-            ))}
+            {NAV_LINKS.map((l) =>
+              l.label === "Features" ? (
+                <li key="features" className="relative">
+                  <button
+                    type="button"
+                    className="inline-flex items-center rounded-full px-4 py-2 text-ink/80 transition-colors hover:bg-ink/5 hover:text-ink"
+                    onMouseEnter={() => setFeaturesOpen(true)}
+                    onClick={() => setFeaturesOpen((o) => !o)}
+                    aria-expanded={featuresOpen}
+                    aria-haspopup="true"
+                  >
+                    <VariableProximityText label="Features" radius={60} />
+                  </button>
+                </li>
+              ) : (
+                <li key={l.label}>
+                  <NavLink label={l.label} href={l.href} cal={l.cal} />
+                </li>
+              )
+            )}
           </ul>
 
           <div className="flex items-center gap-3">
@@ -156,19 +201,19 @@ export function Nav() {
             {/* Hamburger — mobile only */}
             <button
               type="button"
-              aria-label={open ? "Close menu" : "Open menu"}
-              aria-expanded={open}
-              onClick={() => setOpen((o) => !o)}
+              aria-label={mobileOpen ? "Close menu" : "Open menu"}
+              aria-expanded={mobileOpen}
+              onClick={() => setMobileOpen((o) => !o)}
               className="flex md:hidden h-10 w-10 items-center justify-center rounded-full hover:bg-ink/5 transition-colors"
             >
-              <HamburgerIcon open={open} />
+              <HamburgerIcon open={mobileOpen} />
             </button>
           </div>
         </div>
 
         {/* Mobile menu — slides in below the top bar */}
         <AnimatePresence>
-          {open && (
+          {mobileOpen && (
             <motion.ul
               key="mobile-menu"
               initial={{ opacity: 0, y: -8 }}
@@ -188,7 +233,7 @@ export function Nav() {
                     label={l.label}
                     href={l.href}
                     cal={l.cal}
-                    onClick={() => setOpen(false)}
+                    onClick={() => setMobileOpen(false)}
                   />
                 </motion.li>
               ))}
@@ -196,6 +241,40 @@ export function Nav() {
           )}
         </AnimatePresence>
       </motion.div>
+      <AnimatePresence>
+        {featuresOpen && (
+          <motion.div
+            key="features-dropdown"
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+            className="absolute left-0 right-0 top-[88px] z-10 rounded-[20px] bg-white/90 backdrop-blur-md shadow-2xl shadow-black/20 p-4"
+          >
+            <div className="grid grid-cols-3 gap-3">
+              {[
+                { href: "/features/hub", name: "The Hub", desc: "Your entire wine portfolio. One beautiful dashboard." },
+                { href: "/features/sheets", name: "Sales Tools", desc: "On-brand sales sheets & trade tools. No designer needed." },
+                { href: "/features/ai", name: "VinoHub AI", desc: "Your best employee. Works nights and weekends." },
+              ].map((card, i) => (
+                <motion.a
+                  key={card.href}
+                  href={card.href}
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.2, delay: i * 0.04, ease: [0.22, 1, 0.36, 1] }}
+                  onClick={() => setFeaturesOpen(false)}
+                  className="flex flex-col rounded-[12px] border border-[#e5e5e5] bg-white p-3 transition-colors hover:border-[#d0d0d0] hover:bg-[#fafafa]"
+                >
+                  <div className="w-8 h-8 rounded-[8px] bg-[#7f3333] mb-2.5" />
+                  <span className="text-[13px] font-semibold text-[#1a1a1a] mb-1">{card.name}</span>
+                  <span className="text-[11px] text-[#777] leading-[1.5]">{card.desc}</span>
+                </motion.a>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
       </div>
     </nav>
   );
