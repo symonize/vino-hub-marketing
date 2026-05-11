@@ -127,7 +127,7 @@ function DesignSection() {
           <CapabilityCallouts items={["Print-ready output", "Consistent brand", "Scales to any portfolio size", "No design software needed"]} />
         </div>
         <div className="overflow-hidden rounded-[16px] border border-[#d5d5d5] bg-white p-4">
-          <img src={assets.hubScreenshot} alt="Design at scale" className="w-full rounded-[8px] object-cover" />
+          <img src={assets.salesSheetScreenshot} alt="Design at scale" className="w-full rounded-[8px] object-cover" />
         </div>
       </div>
     </section>
@@ -190,10 +190,7 @@ function ConsultationCTA() {
           />
         </h2>
         <p className="mt-8 max-w-[704px] text-[19px] leading-[28px] tracking-[-0.19px] text-white/80">
-          In the wine and spirits industry, digital presence is no longer just a &ldquo;nice-to-have&rdquo;: it&apos;s a critical driver of operational efficiency and market share.
-        </p>
-        <p className="mt-4 max-w-[704px] text-[19px] leading-[28px] tracking-[-0.19px] text-white/80">
-          Knowing where to invest your resources first can be a challenge and in this free 30-minute session, we&apos;ll move past the jargon and focus on the practical steps.
+          Your reps shouldn&apos;t be hunting for the right PDF before every meeting. Book a free consultation and we&apos;ll show you exactly how VinoHub fits your sales workflow.
         </p>
         <CTAButton cal variant="light" className="mt-10">Book A Call</CTAButton>
       </div>
