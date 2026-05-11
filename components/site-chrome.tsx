@@ -47,11 +47,17 @@ export function CTAButton({
 
 type NavItem = { label: string; href?: string; cal?: boolean };
 const NAV_LINKS: NavItem[] = [
-  { label: "Features", href: "/features" },
+  { label: "Features", href: "/features" }, // href used for mobile menu only; desktop renders a dropdown button
   { label: "Pricing", href: "/pricing" },
   { label: "Free Consultation", href: "/consult" },
   { label: "About", href: "/about" },
 ];
+
+const FEATURE_CARDS = [
+  { href: "/features/hub", name: "The Hub", desc: "Your entire wine portfolio. One beautiful dashboard." },
+  { href: "/features/sheets", name: "Sales Tools", desc: "On-brand sales sheets & trade tools. No designer needed." },
+  { href: "/features/ai", name: "VinoHub AI", desc: "Your best employee. Works nights and weekends." },
+] as const;
 
 function NavLink({ label, href, cal, onClick }: NavItem & { onClick?: () => void }) {
   const cls =
@@ -179,7 +185,7 @@ export function Nav() {
                     onMouseEnter={() => setFeaturesOpen(true)}
                     onClick={() => setFeaturesOpen((o) => !o)}
                     aria-expanded={featuresOpen}
-                    aria-haspopup="true"
+                    aria-haspopup="menu"
                   >
                     <VariableProximityText label="Features" radius={60} />
                   </button>
@@ -252,11 +258,7 @@ export function Nav() {
             className="absolute left-0 right-0 top-[88px] z-10 rounded-[20px] bg-white/90 backdrop-blur-md shadow-2xl shadow-black/20 p-4"
           >
             <div className="grid grid-cols-3 gap-3">
-              {[
-                { href: "/features/hub", name: "The Hub", desc: "Your entire wine portfolio. One beautiful dashboard." },
-                { href: "/features/sheets", name: "Sales Tools", desc: "On-brand sales sheets & trade tools. No designer needed." },
-                { href: "/features/ai", name: "VinoHub AI", desc: "Your best employee. Works nights and weekends." },
-              ].map((card, i) => (
+              {FEATURE_CARDS.map((card, i) => (
                 <motion.a
                   key={card.href}
                   href={card.href}
