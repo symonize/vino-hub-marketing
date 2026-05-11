@@ -59,6 +59,9 @@ function SheetsHero() {
           <p className="mx-auto mt-8 max-w-[620px] text-[20px] leading-[28px] tracking-[-0.2px] text-white/85">
             Your rep has a buyer meeting in an hour. Today that means scrambling for a PDF, hoping it has the right vintage, and apologizing for the layout. With VinoHub, it means opening their phone and hitting generate.
           </p>
+          <div className="mt-10">
+            <CTAButton cal variant="dark">Book a Demo</CTAButton>
+          </div>
         </div>
       </div>
     </section>
