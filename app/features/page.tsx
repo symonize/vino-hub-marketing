@@ -126,7 +126,7 @@ function SalesSheetsSection() {
   return (
     <section id="sheets" className="mx-auto max-w-[1300px] px-6 py-24">
       <div className="grid gap-12 md:grid-cols-2 items-center">
-        {/* Screenshot first on desktop (right col), but copy first in source for mobile */}
+        {/* Image left on desktop (md:order-first), copy right; stacks with copy on top on mobile */}
         <div className="overflow-hidden rounded-[16px] border border-[#d5d5d5] bg-white p-4 md:order-first">
           <img
             src={assets.salesSheetScreenshot}
