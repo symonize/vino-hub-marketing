@@ -72,6 +72,20 @@ export default function PricingPage() {
 
       <PricingGrid skus={skus} />
 
+      <section className="mx-auto max-w-[820px] px-6 pb-16 text-center">
+        <p className="text-[16px] leading-[24px] tracking-[-0.16px] text-[#8a8a8a]">
+          Website design &amp; development is available as a custom add-on.{" "}
+          <button
+            type="button"
+            className="underline underline-offset-2 transition-colors hover:text-[#4d4d4d]"
+            {...CAL_DATA}
+          >
+            Book a call
+          </button>{" "}
+          to discuss.
+        </p>
+      </section>
+
       <Footer />
     </main>
   );
