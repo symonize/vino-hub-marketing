@@ -47,11 +47,10 @@ export function CTAButton({
 
 type NavItem = { label: string; href?: string; cal?: boolean };
 const NAV_LINKS: NavItem[] = [
-  { label: "Services", href: "/services" },
+  { label: "Features", href: "/features" },
+  { label: "Pricing", href: "/pricing" },
   { label: "Free Consultation", href: "/consult" },
-  // { label: "Pricing", href: "/pricing" },
   { label: "About", href: "/about" },
-  { label: "Contact", href: "/#contact" },
 ];
 
 function NavLink({ label, href, cal, onClick }: NavItem & { onClick?: () => void }) {
@@ -208,12 +207,13 @@ export function Footer() {
       <div className="grid gap-12 md:grid-cols-[200px_200px_1fr]">
         <div>
           <h4 className="text-[20px] font-semibold uppercase tracking-[2px] text-black">
-            Services
+            Features
           </h4>
           <ul className="mt-4 space-y-2 text-[20px] font-medium tracking-[-0.2px] text-[#535353]">
-            <li><a href="/services#hub" className="transition-colors hover:text-black">Wine Asset Management</a></li>
-            <li><a href="/services#web" className="transition-colors hover:text-black">Website Design &amp; Dev</a></li>
-            <li><a href="/services#ai" className="transition-colors hover:text-black">AI Solutions</a></li>
+            <li><a href="/features#hub" className="transition-colors hover:text-black">Wine Asset Management</a></li>
+            <li><a href="/features#sheets" className="transition-colors hover:text-black">Sales Sheets &amp; Trade Tools</a></li>
+            <li><a href="/features#ai" className="transition-colors hover:text-black">AI Solutions</a></li>
+            <li><a href="/features#websites" className="transition-colors hover:text-black">Website Design &amp; Dev</a></li>
           </ul>
         </div>
 
