@@ -2,6 +2,7 @@ import StaggeredText from "@/components/react-bits/staggered-text";
 import { CTAButton, Nav, Footer } from "@/components/site-chrome";
 import ServicesHeroGraphic from "@/components/services-hero-graphic";
 import ChatFlow from "@/components/chat-flow";
+import { CapabilityCallouts } from "@/components/capability-callouts";
 import { assets } from "../assets";
 
 export const metadata = {
@@ -68,21 +69,6 @@ function FeaturesHero() {
         </div>
       </div>
     </section>
-  );
-}
-
-function CapabilityCallouts({ items }: { items: string[] }) {
-  return (
-    <div className="mt-8 flex flex-wrap gap-3">
-      {items.map((item) => (
-        <span
-          key={item}
-          className="rounded-full border border-[#d5d5d5] bg-white px-4 py-2 text-[15px] tracking-[-0.15px] text-[#4d4d4d]"
-        >
-          {item}
-        </span>
-      ))}
-    </div>
   );
 }
 
