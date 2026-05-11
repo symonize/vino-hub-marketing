@@ -302,12 +302,13 @@ function WebsiteGallery() {
   const shots = [assets.siteShot1, assets.siteShot2, assets.siteShot3, assets.siteShot4];
   return (
     <section id="web" className="mx-auto max-w-[1300px] px-6 py-24">
-      <div className="grid gap-10 md:grid-cols-2">
+      <div className="grid gap-10 md:grid-cols-2 items-center">
+        {/* Left: copy + CTA */}
         <div>
           <h2 className="max-w-[619px] text-[clamp(32px,4.5vw,50px)] font-medium leading-[1.18] tracking-[-1.5px] text-ink">
             <StaggeredText
               as="span"
-              text="A website that matches your robust portfolio."
+              text="[COPY: A website that sells as hard as your portfolio.]"
               segmentBy="words"
               delay={70}
               duration={0.7}
@@ -315,44 +316,42 @@ function WebsiteGallery() {
               blur
             />
           </h2>
-          <CTAButton href="#web" variant="light" className="mt-8">
+          <p className="mt-6 max-w-[500px] text-[19px] leading-[28px] tracking-[-0.19px] text-muted">
+            [COPY: Your VinoHub portfolio, live on a website we design, build, and maintain for you.
+            When your inventory updates in VinoHub, your website updates too — no manual work, no stale listings.]
+          </p>
+          <CTAButton href="/features#websites" variant="light" className="mt-8">
             Learn More
           </CTAButton>
         </div>
-        <p className="max-w-[616px] text-[19px] leading-[28px] tracking-[-0.19px] text-muted">
-          A website shouldn&apos;t just look good; it should work as hard as your
-          winery team. Everything starts here. We design and build websites with
-          a wine database workflow at their core — so your site isn&apos;t just
-          a pretty storefront, it&apos;s the backbone of your entire digital
-          operation.
-        </p>
-      </div>
 
-      <div className="relative mt-12 overflow-hidden">
-        <style>{`
-          @keyframes marquee {
-            from { transform: translateX(0); }
-            to   { transform: translateX(-50%); }
-          }
-          .marquee-track {
-            display: flex;
-            gap: 24px;
-            width: max-content;
-            animation: marquee 28s linear infinite;
-          }
-          .marquee-track:hover { animation-play-state: paused; }
-        `}</style>
+        {/* Right: marquee of site screenshots */}
+        <div className="relative overflow-hidden">
+          <style>{`
+            @keyframes marquee {
+              from { transform: translateX(0); }
+              to   { transform: translateX(-50%); }
+            }
+            .marquee-track {
+              display: flex;
+              gap: 16px;
+              width: max-content;
+              animation: marquee 28s linear infinite;
+            }
+            .marquee-track:hover { animation-play-state: paused; }
+          `}</style>
 
-        <div className="marquee-track">
-          {[...shots, ...shots].map((src, i) => (
-            <div key={i} className="h-[423px] flex-shrink-0 overflow-hidden rounded-[12px]" style={{ width: 320 }}>
-              <img src={src} alt="" className="h-full w-full object-cover" />
-            </div>
-          ))}
+          <div className="marquee-track">
+            {[...shots, ...shots].map((src, i) => (
+              <div key={i} className="h-[300px] flex-shrink-0 overflow-hidden rounded-[12px]" style={{ width: 240 }}>
+                <img src={src} alt="" className="h-full w-full object-cover" />
+              </div>
+            ))}
+          </div>
+
+          <div className="pointer-events-none absolute inset-y-0 left-0 w-[80px] bg-gradient-to-r from-bg to-transparent" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-[80px] bg-gradient-to-l from-bg to-transparent" />
         </div>
-
-        <div className="pointer-events-none absolute inset-y-0 left-0 w-[150px] bg-gradient-to-r from-bg to-transparent" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 w-[150px] bg-gradient-to-l from-bg to-transparent" />
       </div>
     </section>
   );
