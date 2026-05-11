@@ -1,0 +1,235 @@
+<h2>Full form preview</h2>
+<p class="subtitle">All the pieces together — pill chips for both selects, segmented control for scale</p>
+
+<style>
+  .form-card {
+    background: #fff;
+    border: 1px solid #d5d5d5;
+    border-radius: 14px;
+    padding: 40px;
+    max-width: 520px;
+    margin: 0 auto;
+  }
+
+  .field-group { display: flex; flex-direction: column; gap: 16px; }
+  .field-row { display: flex; gap: 12px; }
+  .field-row .field-wrap { flex: 1; }
+
+  .field-wrap { display: flex; flex-direction: column; gap: 6px; }
+  .field-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: #888;
+  }
+
+  .mock-input {
+    width: 100%;
+    height: 44px;
+    border-radius: 9px;
+    border: 1.5px solid #dfdfdf;
+    background: #fafafa;
+    padding: 0 13px;
+    font-size: 15px;
+    color: #2f2f2f;
+    box-sizing: border-box;
+    transition: border-color 0.15s;
+    outline: none;
+    font-family: inherit;
+  }
+  .mock-input:focus { border-color: rgba(47,47,47,0.4); background: #fff; }
+  .mock-input::placeholder { color: #bbb; }
+
+  .mock-textarea {
+    width: 100%;
+    height: 100px;
+    border-radius: 9px;
+    border: 1.5px solid #dfdfdf;
+    background: #fafafa;
+    padding: 12px 13px;
+    font-size: 15px;
+    color: #2f2f2f;
+    box-sizing: border-box;
+    resize: none;
+    font-family: inherit;
+    transition: border-color 0.15s;
+    outline: none;
+    line-height: 1.5;
+  }
+  .mock-textarea:focus { border-color: rgba(47,47,47,0.4); background: #fff; }
+  .mock-textarea::placeholder { color: #bbb; }
+
+  /* Pill chips */
+  .pill-group { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 2px; }
+  .pill {
+    padding: 6px 13px;
+    border-radius: 999px;
+    border: 1.5px solid #d5d5d5;
+    background: #fff;
+    font-size: 13.5px;
+    color: #2f2f2f;
+    cursor: pointer;
+    transition: all 0.15s;
+    user-select: none;
+    font-family: inherit;
+  }
+  .pill:hover { border-color: #2f2f2f; }
+  .pill.selected { background: #2f2f2f; color: #fff; border-color: #2f2f2f; }
+
+  /* Segmented control */
+  .seg-wrap { margin-top: 2px; }
+  .seg-track {
+    display: flex;
+    background: #f0f0f0;
+    border-radius: 10px;
+    padding: 3px;
+    gap: 2px;
+  }
+  .seg-btn {
+    flex: 1;
+    padding: 8px 4px;
+    border-radius: 8px;
+    border: none;
+    background: transparent;
+    font-size: 14px;
+    color: #626262;
+    cursor: pointer;
+    transition: all 0.15s;
+    text-align: center;
+    font-family: inherit;
+  }
+  .seg-btn.selected {
+    background: #fff;
+    color: #2f2f2f;
+    font-weight: 600;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+  }
+  .seg-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 5px;
+    font-size: 11px;
+    color: #aaa;
+  }
+
+  .divider {
+    border: none;
+    border-top: 1px solid #ebebeb;
+    margin: 4px 0;
+  }
+
+  .submit-btn {
+    margin-top: 8px;
+    width: 100%;
+    height: 44px;
+    border-radius: 12px;
+    background: #2f2f2f;
+    color: #fff;
+    border: none;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: inherit;
+    letter-spacing: -0.01em;
+    transition: transform 0.15s, background 0.15s;
+  }
+  .submit-btn:hover { transform: scale(1.01); background: #1a1a1a; }
+</style>
+
+<div class="form-card">
+  <div class="field-group">
+
+    <div class="field-row">
+      <div class="field-wrap">
+        <label class="field-label">Name</label>
+        <input class="mock-input" placeholder="Jane Smith" />
+      </div>
+      <div class="field-wrap">
+        <label class="field-label">Email</label>
+        <input class="mock-input" type="email" placeholder="jane@winery.com" />
+      </div>
+    </div>
+
+    <div class="field-row">
+      <div class="field-wrap">
+        <label class="field-label">Role</label>
+        <input class="mock-input" placeholder="COO" />
+      </div>
+      <div class="field-wrap">
+        <label class="field-label">Company</label>
+        <input class="mock-input" placeholder="Acme Winery" />
+      </div>
+    </div>
+
+    <div class="field-wrap">
+      <label class="field-label">Phone</label>
+      <input class="mock-input" placeholder="+1 (555) 000-0000" style="max-width:240px" />
+    </div>
+
+    <hr class="divider" />
+
+    <div class="field-wrap">
+      <label class="field-label">ERP / Operational software</label>
+      <div class="pill-group" id="erp">
+        <div class="pill" onclick="toggleMulti(this)">None</div>
+        <div class="pill selected" onclick="toggleMulti(this)">VinoShipper</div>
+        <div class="pill" onclick="toggleMulti(this)">WineDirect</div>
+        <div class="pill" onclick="toggleMulti(this)">Commerce7</div>
+        <div class="pill" onclick="toggleMulti(this)">Other</div>
+      </div>
+    </div>
+
+    <div class="field-wrap">
+      <label class="field-label">Highest priority area</label>
+      <div class="pill-group" id="priority">
+        <div class="pill selected" onclick="selectSingle(this)">Website</div>
+        <div class="pill" onclick="selectSingle(this)">E-commerce</div>
+        <div class="pill" onclick="selectSingle(this)">Portfolio mgmt</div>
+        <div class="pill" onclick="selectSingle(this)">Sales tools</div>
+        <div class="pill" onclick="selectSingle(this)">AI / automation</div>
+      </div>
+    </div>
+
+    <div class="field-wrap">
+      <label class="field-label">Digital maturity</label>
+      <div class="seg-wrap">
+        <div class="seg-track" id="maturity">
+          <div class="seg-btn" onclick="selectSeg(this)">1</div>
+          <div class="seg-btn" onclick="selectSeg(this)">2</div>
+          <div class="seg-btn selected" onclick="selectSeg(this)">3</div>
+          <div class="seg-btn" onclick="selectSeg(this)">4</div>
+          <div class="seg-btn" onclick="selectSeg(this)">5</div>
+        </div>
+        <div class="seg-labels">
+          <span>Just starting</span>
+          <span>Highly mature</span>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider" />
+
+    <div class="field-wrap">
+      <label class="field-label">#1 digital challenge in the next 6 months</label>
+      <textarea class="mock-textarea" placeholder="Tell us what's on your mind…"></textarea>
+    </div>
+
+    <button class="submit-btn">Send</button>
+
+  </div>
+</div>
+
+<script>
+function toggleMulti(el) {
+  el.classList.toggle('selected');
+}
+function selectSingle(el) {
+  el.closest('.pill-group').querySelectorAll('.pill').forEach(p => p.classList.remove('selected'));
+  el.classList.add('selected');
+}
+function selectSeg(el) {
+  el.closest('.seg-track').querySelectorAll('.seg-btn').forEach(b => b.classList.remove('selected'));
+  el.classList.add('selected');
+}
+</script>

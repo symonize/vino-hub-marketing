@@ -1,12 +1,9 @@
+"use client";
+
 import StaggeredText from "@/components/react-bits/staggered-text";
 import VariableProximityText from "@/components/react-bits/variable-proximity-text";
 import { Nav, Footer } from "@/components/site-chrome";
-
-export const metadata = {
-  title: "Schedule a Free Consultation — VinoHub",
-  description:
-    "Book a free 30-minute digital strategy session for your wine and spirits business.",
-};
+import { useRef, useState, useEffect } from "react";
 
 export default function ConsultPage() {
   return (
@@ -101,57 +98,122 @@ function SessionDetails() {
 }
 
 function ConsultationForm() {
+  const [erpValues, setErpValues] = useState<string[]>([]);
+  const [priorityValue, setPriorityValue] = useState<string>("");
+  const [maturityValue, setMaturityValue] = useState<string | null>(null);
+
   const inputClass =
-    "w-full h-[44px] rounded-[9px] border border-[#dfdfdf] bg-white px-[13px] text-[15px] tracking-[-0.45px] text-ink outline-none placeholder:text-[#797979] focus:border-ink/40 transition-colors";
-  const selectClass = `${inputClass} appearance-none bg-[url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2218%22 height=%2218%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%23797979%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22><polyline points=%2218 15 12 9 6 15%22/></svg>')] bg-[right_13px_center] bg-no-repeat pr-10`;
+    "w-full h-[52px] rounded-[9px] border border-[#dfdfdf] bg-white pt-[18px] pb-[6px] px-[13px] text-[15px] tracking-[-0.45px] text-ink outline-none focus:border-ink/40 transition-colors";
+  const labelClass =
+    "absolute left-[13px] top-1/2 -translate-y-1/2 text-[15px] text-muted pointer-events-none transition-all duration-[180ms] ease-[cubic-bezier(0.4,0,0.2,1)]";
 
   return (
     <form className="rounded-[14px] border border-[#d5d5d5] bg-white p-8 md:p-10">
       <div className="space-y-4">
-        <input className={inputClass} type="text" name="name" placeholder="Name" />
-        <input className={inputClass} type="email" name="email" placeholder="Email" />
-        <input className={inputClass} type="text" name="role" placeholder="Role" />
-        <input className={inputClass} type="text" name="company" placeholder="Company" />
-        <input className={inputClass} type="tel" name="phone" placeholder="Phone" />
 
-        <select className={selectClass} name="erp" defaultValue="">
-          <option value="" disabled>
-            Which operational/ERP software are you currently using?
-          </option>
-          <option>None</option>
-          <option>VinoShipper</option>
-          <option>WineDirect</option>
-          <option>Commerce7</option>
-          <option>Other</option>
-        </select>
+        {/* Name + Email */}
+        <div className="grid grid-cols-2 gap-3">
+          <div className="float-field relative">
+            <input className={inputClass} type="text" name="name" placeholder=" " />
+            <label className={labelClass}>Name</label>
+          </div>
+          <div className="float-field relative">
+            <input className={inputClass} type="email" name="email" placeholder=" " />
+            <label className={labelClass}>Email</label>
+          </div>
+        </div>
 
-        <select className={selectClass} name="priority" defaultValue="">
-          <option value="" disabled>
-            Which area of your digital presence is currently the highest priority?
-          </option>
-          <option>Website</option>
-          <option>E-commerce</option>
-          <option>Portfolio management</option>
-          <option>Sales tools</option>
-          <option>AI / automation</option>
-        </select>
+        {/* Role + Company */}
+        <div className="grid grid-cols-2 gap-3">
+          <div className="float-field relative">
+            <input className={inputClass} type="text" name="role" placeholder=" " />
+            <label className={labelClass}>Role</label>
+          </div>
+          <div className="float-field relative">
+            <input className={inputClass} type="text" name="company" placeholder=" " />
+            <label className={labelClass}>Company</label>
+          </div>
+        </div>
 
-        <select className={selectClass} name="maturity" defaultValue="">
-          <option value="" disabled>
-            On a scale of 1–5, how &quot;digitally mature&quot; is your current operation?
-          </option>
-          <option>1 — Just getting started</option>
-          <option>2</option>
-          <option>3</option>
-          <option>4</option>
-          <option>5 — Highly mature</option>
-        </select>
+        {/* Phone */}
+        <div className="max-w-[240px]">
+          <div className="float-field relative">
+            <input className={inputClass} type="tel" name="phone" placeholder=" " />
+            <label className={labelClass}>Phone</label>
+          </div>
+        </div>
 
-        <textarea
-          className={`${inputClass} h-[110px] resize-none py-[14px] leading-[20px]`}
-          name="challenge"
-          placeholder="What is the #1 digital challenge you'd like to solve in the next 6 months?"
-        />
+        <hr className="border-t border-[#ebebeb]" />
+
+        {/* ERP — multi-select pills */}
+        <div className="space-y-2">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.06em] text-muted">
+            ERP / Operational software
+          </p>
+          <div className="flex flex-wrap gap-2">
+            {["None", "VinoShipper", "WineDirect", "Commerce7", "Other"].map((opt) => (
+              <PillChip
+                key={opt}
+                label={opt}
+                selected={erpValues.includes(opt)}
+                onClick={() =>
+                  setErpValues((prev) =>
+                    prev.includes(opt) ? prev.filter((v) => v !== opt) : [...prev, opt]
+                  )
+                }
+              />
+            ))}
+          </div>
+          <input type="hidden" name="erp" value={erpValues.join(",")} />
+        </div>
+
+        {/* Priority — single-select pills */}
+        <div className="space-y-2">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.06em] text-muted">
+            Highest priority area
+          </p>
+          <div className="flex flex-wrap gap-2">
+            {["Website", "E-commerce", "Portfolio management", "Sales tools", "AI / automation"].map((opt) => (
+              <PillChip
+                key={opt}
+                label={opt}
+                selected={priorityValue === opt}
+                onClick={() => setPriorityValue(opt)}
+              />
+            ))}
+          </div>
+          <input type="hidden" name="priority" value={priorityValue} />
+        </div>
+
+        {/* Maturity — segmented control */}
+        <div className="space-y-2">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.06em] text-muted">
+            Digital maturity
+          </p>
+          <SegmentedControl
+            options={["1", "2", "3", "4", "5"]}
+            value={maturityValue}
+            onChange={setMaturityValue}
+          />
+          <div className="flex justify-between text-[11px] text-muted">
+            <span>Just starting</span>
+            <span>Highly mature</span>
+          </div>
+          <input type="hidden" name="maturity" value={maturityValue ?? ""} />
+        </div>
+
+        {/* Challenge textarea */}
+        <div className="float-field relative">
+          <textarea
+            className="w-full h-[110px] rounded-[9px] border border-[#dfdfdf] bg-white pt-[28px] pb-[10px] px-[13px] text-[15px] tracking-[-0.45px] text-ink outline-none focus:border-ink/40 transition-colors resize-none leading-[20px]"
+            name="challenge"
+            placeholder=" "
+          />
+          <label className="absolute left-[13px] top-[14px] text-[15px] text-muted pointer-events-none transition-all duration-[180ms] ease-[cubic-bezier(0.4,0,0.2,1)]">
+            #1 digital challenge in the next 6 months
+          </label>
+        </div>
+
       </div>
 
       <button
@@ -161,6 +223,113 @@ function ConsultationForm() {
         <VariableProximityText label="Send" />
       </button>
     </form>
+  );
+}
+
+interface PillChipProps {
+  label: string;
+  selected: boolean;
+  onClick: () => void;
+}
+
+function PillChip({ label, selected, onClick }: PillChipProps) {
+  const [isAnimating, setIsAnimating] = useState(false);
+  const wasSelected = useRef(selected);
+
+  const handleClick = () => {
+    const becomingSelected = !selected;
+    onClick();
+    if (becomingSelected) setIsAnimating(true);
+  };
+
+  wasSelected.current = selected;
+
+  return (
+    <button
+      type="button"
+      onClick={handleClick}
+      onAnimationEnd={() => setIsAnimating(false)}
+      className={[
+        "px-[13px] py-[6px] rounded-full border-[1.5px] text-[13.5px] transition-colors duration-150 cursor-pointer select-none",
+        selected
+          ? "bg-ink text-white border-ink"
+          : "bg-white text-ink border-[#d5d5d5] hover:border-ink",
+        isAnimating ? "pill-pop-anim" : "",
+      ]
+        .filter(Boolean)
+        .join(" ")}
+    >
+      {label}
+    </button>
+  );
+}
+
+interface SegmentedControlProps {
+  options: string[];
+  value: string | null;
+  onChange: (val: string) => void;
+}
+
+function SegmentedControl({ options, value, onChange }: SegmentedControlProps) {
+  const trackRef = useRef<HTMLDivElement>(null);
+  const [thumb, setThumb] = useState({ left: 3, width: 0, visible: false });
+
+  useEffect(() => {
+    if (!trackRef.current) return;
+    const idx = value !== null ? options.indexOf(value) : -1;
+    if (idx === -1) {
+      setThumb((t) => ({ ...t, visible: false }));
+      return;
+    }
+    const trackWidth = trackRef.current.offsetWidth;
+    const btnWidth = (trackWidth - 6) / options.length;
+    setThumb({ left: idx * btnWidth + 3, width: btnWidth, visible: true });
+  }, [value, options]);
+
+  useEffect(() => {
+    if (!trackRef.current) return;
+    const ro = new ResizeObserver(() => {
+      if (!trackRef.current || value === null) return;
+      const idx = options.indexOf(value);
+      if (idx === -1) return;
+      const trackWidth = trackRef.current.offsetWidth;
+      const btnWidth = (trackWidth - 6) / options.length;
+      setThumb({ left: idx * btnWidth + 3, width: btnWidth, visible: true });
+    });
+    ro.observe(trackRef.current);
+    return () => ro.disconnect();
+  }, [value, options]);
+
+  return (
+    <div
+      ref={trackRef}
+      role="group"
+      className="relative flex bg-[#f0f0f0] rounded-[10px] p-[3px] gap-0"
+    >
+      <div
+        className="absolute inset-y-[3px] bg-white rounded-[8px] shadow-sm"
+        style={{
+          left: thumb.left,
+          width: thumb.width,
+          opacity: thumb.visible ? 1 : 0,
+          transition:
+            "left 220ms cubic-bezier(0.4,0,0.2,1), width 220ms cubic-bezier(0.4,0,0.2,1), opacity 150ms",
+        }}
+      />
+      {options.map((opt) => (
+        <button
+          key={opt}
+          type="button"
+          onClick={() => onChange(opt)}
+          className={[
+            "relative z-10 flex-1 py-[8px] text-[14px] border-none bg-transparent cursor-pointer transition-colors duration-150 rounded-[8px]",
+            value === opt ? "text-ink font-semibold" : "text-muted",
+          ].join(" ")}
+        >
+          {opt}
+        </button>
+      ))}
+    </div>
   );
 }
 

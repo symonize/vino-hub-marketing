@@ -12,3 +12,25 @@ body {
   color: #2f2f2f;
   -webkit-font-smoothing: antialiased;
 }
+
+@keyframes pill-pop {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+.pill-pop-anim {
+  animation: pill-pop 220ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Floated state only — resting positions set via Tailwind in JSX */
+.float-field input:focus + label,
+.float-field input:not(:placeholder-shown) + label,
+.float-field textarea:focus + label,
+.float-field textarea:not(:placeholder-shown) + label {
+  top: 8px;
+  transform: none;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}

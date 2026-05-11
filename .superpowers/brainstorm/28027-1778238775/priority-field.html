@@ -1,0 +1,79 @@
+<h2>Priority field — single-select behavior</h2>
+<p class="subtitle">The "highest priority area" field only allows one choice. Should it look different from the multi-select ERP chips?</p>
+
+<style>
+  .demo-box { background: #fafafa; border: 1px solid #e8e8e8; border-radius: 12px; padding: 20px; margin-bottom: 16px; }
+  .demo-title { font-size: 13px; font-weight: 600; color: #2f2f2f; margin-bottom: 16px; }
+  .field-label { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #888; margin-bottom: 10px; }
+
+  /* Same pill chips — single select */
+  .pill-group { display: flex; flex-wrap: wrap; gap: 8px; }
+  .pill { padding: 7px 14px; border-radius: 999px; border: 1.5px solid #d5d5d5; background: #fff; font-size: 14px; color: #2f2f2f; cursor: pointer; transition: all 0.15s; }
+  .pill:hover { border-color: #2f2f2f; }
+  .pill.selected { background: #2f2f2f; color: #fff; border-color: #2f2f2f; }
+
+  /* Stacked radio cards */
+  .radio-stack { display: flex; flex-direction: column; gap: 8px; }
+  .radio-card { display: flex; align-items: center; gap: 12px; padding: 11px 14px; border-radius: 10px; border: 1.5px solid #d5d5d5; background: #fff; cursor: pointer; transition: all 0.15s; }
+  .radio-card:hover { border-color: #2f2f2f; }
+  .radio-card.selected { border-color: #2f2f2f; background: #2f2f2f; color: #fff; }
+  .radio-dot { width: 16px; height: 16px; border-radius: 50%; border: 1.5px solid #d5d5d5; flex-shrink: 0; transition: all 0.15s; display: flex; align-items: center; justify-content: center; }
+  .radio-card.selected .radio-dot { border-color: #fff; background: #fff; }
+  .radio-dot-inner { width: 7px; height: 7px; border-radius: 50%; background: #2f2f2f; display: none; }
+  .radio-card.selected .radio-dot-inner { display: block; }
+  .radio-label { font-size: 14px; }
+</style>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
+  <div class="demo-box">
+    <div class="demo-title">Option A — Same pill chips (single-select)</div>
+    <div class="field-label">Highest priority area?</div>
+    <div class="pill-group" id="pills-a">
+      <div class="pill selected" onclick="selectPill(this)">Website</div>
+      <div class="pill" onclick="selectPill(this)">E-commerce</div>
+      <div class="pill" onclick="selectPill(this)">Portfolio mgmt</div>
+      <div class="pill" onclick="selectPill(this)">Sales tools</div>
+      <div class="pill" onclick="selectPill(this)">AI / automation</div>
+    </div>
+  </div>
+
+  <div class="demo-box">
+    <div class="demo-title">Option B — Stacked radio cards</div>
+    <div class="field-label">Highest priority area?</div>
+    <div class="radio-stack" id="radios-b">
+      <div class="radio-card selected" onclick="selectRadio(this)">
+        <div class="radio-dot"><div class="radio-dot-inner"></div></div>
+        <span class="radio-label">Website</span>
+      </div>
+      <div class="radio-card" onclick="selectRadio(this)">
+        <div class="radio-dot"><div class="radio-dot-inner"></div></div>
+        <span class="radio-label">E-commerce</span>
+      </div>
+      <div class="radio-card" onclick="selectRadio(this)">
+        <div class="radio-dot"><div class="radio-dot-inner"></div></div>
+        <span class="radio-label">Portfolio management</span>
+      </div>
+      <div class="radio-card" onclick="selectRadio(this)">
+        <div class="radio-dot"><div class="radio-dot-inner"></div></div>
+        <span class="radio-label">Sales tools</span>
+      </div>
+      <div class="radio-card" onclick="selectRadio(this)">
+        <div class="radio-dot"><div class="radio-dot-inner"></div></div>
+        <span class="radio-label">AI / automation</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function selectPill(el) {
+  el.closest('.pill-group').querySelectorAll('.pill').forEach(p => p.classList.remove('selected'));
+  el.classList.add('selected');
+}
+function selectRadio(el) {
+  el.closest('.radio-stack').querySelectorAll('.radio-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+}
+</script>
+
+<p class="subtitle" style="margin-top:24px">Click to try both. A keeps everything visually consistent. B makes the single-select nature more obvious.</p>
