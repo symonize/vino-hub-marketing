@@ -32,6 +32,22 @@ const TEAM: TeamMember[] = [
     linkedIn: "https://www.linkedin.com/in/giuliapedrina/",
   },
   {
+    id: "simon",
+    name: "Simon Milberg",
+    title: "Co-Founder & Head of Engineering",
+    initials: "SM",
+    imageUrl: "/assets/simon-milberg.webp",
+    shortBio:
+      "Built the infrastructure that powered America's largest wine distributor.",
+    fullBio: [
+      "Simon spent six years embedded inside the technical infrastructure of the country's largest wine and spirits distributor, where he learned firsthand how brittle the tooling around a multi-billion-dollar industry really is.",
+      "He started VinoHub with Giulia after one too many conversations with importers who were paying enterprise software prices for tools that couldn't even open a vintage-specific tasting note. He leads engineering here, with a focus on AI workflows that do the boring parts of wine ops faster than any human ever could — so the humans can get back to the part of the job that actually matters.",
+      "His north star: a sales rep should be able to walk into a restaurant, pull out their phone, and have everything they need to close the sale in under three taps.",
+    ],
+    funFact:
+      "Keeps a small but indefensibly nerdy collection of single-vineyard Rieslings. Has opinions about screwcaps.",
+  },
+  {
     id: "julian",
     name: "Julian Dallmeier",
     title: "AI Engineer & Data Strategist",
@@ -43,21 +59,6 @@ const TEAM: TeamMember[] = [
       "Julian brings an international background to VinoHub, holding a PhD in Neuroscience from the University of Miami and a Master's degree from the University of Navarra, Spain. He has taught college-level Python programming and spent over a decade studying and working in Machine Learning: the foundational discipline that AI is built upon. Having worked with AI before it entered the mainstream conversation, Julian has the depth of experience and technical fluency to build tailored AI solutions that address the specific needs of the wine industry — not generic tools, but systems designed around how importers, producers, and distributors actually work.",
       "He is also a specialist in data management: structuring and organizing complex wine portfolios, automating data workflows to eliminate repetitive manual work, and translating raw numbers into business decisions that are easy to understand and act on. At VinoHub, he applies that expertise directly to wine portfolio management, building intelligent systems that help importers and wineries organize their data, eliminate manual work, and operate with confidence and efficiency.",
     ],
-  },
-  {
-    id: "simon",
-    name: "Simon Milberg",
-    title: "Co-Founder & Head of Engineering",
-    initials: "SM",
-    shortBio:
-      "Built the infrastructure that powered America's largest wine distributor.",
-    fullBio: [
-      "Simon spent six years embedded inside the technical infrastructure of the country's largest wine and spirits distributor, where he learned firsthand how brittle the tooling around a multi-billion-dollar industry really is.",
-      "He started VinoHub with Giulia after one too many conversations with importers who were paying enterprise software prices for tools that couldn't even open a vintage-specific tasting note. He leads engineering here, with a focus on AI workflows that do the boring parts of wine ops faster than any human ever could — so the humans can get back to the part of the job that actually matters.",
-      "His north star: a sales rep should be able to walk into a restaurant, pull out their phone, and have everything they need to close the sale in under three taps.",
-    ],
-    funFact:
-      "Keeps a small but indefensibly nerdy collection of single-vineyard Rieslings. Has opinions about screwcaps.",
   },
 ];
 
@@ -285,7 +286,7 @@ function TeamSection({ onOpen }: { onOpen: (m: TeamMember) => void }) {
         to work today. Click a card to read the long version.
       </p>
 
-      <div className="mt-12 grid gap-8 md:grid-cols-2">
+      <div className="mt-12 grid gap-8 md:grid-cols-3">
         {TEAM.map((m, i) => (
           <TeamCard key={m.id} member={m} index={i} onOpen={onOpen} />
         ))}
@@ -315,11 +316,19 @@ function TeamCard({
       className="group block w-full text-left"
     >
       <div className="relative aspect-square w-full overflow-hidden rounded-[16px] border border-[#a6a6a6] bg-gradient-to-br from-[#7f3333] to-[#3a1414]">
-        <div className="absolute inset-0 flex items-center justify-center">
-          <span className="font-serif text-[140px] italic leading-none text-white/95 transition-transform duration-500 group-hover:scale-110">
-            {member.initials}
-          </span>
-        </div>
+        {member.imageUrl ? (
+          <img
+            src={member.imageUrl}
+            alt={member.name}
+            className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+        ) : (
+          <div className="absolute inset-0 flex items-center justify-center">
+            <span className="font-serif text-[140px] italic leading-none text-white/95 transition-transform duration-500 group-hover:scale-110">
+              {member.initials}
+            </span>
+          </div>
+        )}
 
         {/* Hover overlay with short bio */}
         <div className="absolute inset-x-0 bottom-0 translate-y-full bg-gradient-to-t from-black/80 to-black/0 p-6 transition-transform duration-300 group-hover:translate-y-0">
