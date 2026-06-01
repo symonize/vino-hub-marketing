@@ -36,6 +36,7 @@ const TEAM: TeamMember[] = [
     name: "Julian Dallmeier",
     title: "AI Engineer & Data Strategist",
     initials: "JD",
+    imageUrl: "/assets/julian-dallmeier.webp",
     shortBio:
       "PhD neuroscientist turned AI engineer — building wine-native intelligence before it was mainstream.",
     fullBio: [
