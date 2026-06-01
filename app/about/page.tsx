@@ -15,6 +15,7 @@ const TEAM: TeamMember[] = [
     name: "Giulia Pedrina",
     title: "Co-Founder & Head of Client Strategy",
     initials: "GP",
+    imageUrl: "/assets/giulia-pedrina.webp",
     shortBio:
       "Born in Italy's Prosecco region — bridging old-world tradition and modern digital strategy.",
     fullBio: [
@@ -28,6 +29,7 @@ const TEAM: TeamMember[] = [
       "Off-Duty: I'm an avid beach volleyball player and professional boat day enthusiast.",
       "Secret Skill: I make delicious handmade ravioli and gnocchi. If you need proof, you're more than welcome to stop by and judge for yourself! ;)",
     ],
+    linkedIn: "https://www.linkedin.com/in/giuliapedrina/",
   },
   {
     id: "julian",
