@@ -71,7 +71,7 @@ export default function AboutPage() {
       <AboutHero />
       <TeamSection onOpen={setOpenMember} />
       <ValuesGrid />
-      <TimelineSection />
+      {/* <TimelineSection /> */}
       <ManifestoSection />
       <CTASection />
 
