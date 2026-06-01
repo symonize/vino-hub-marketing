@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Instrument_Sans, Instrument_Serif, Roboto_Flex } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import CalInit from "@/components/cal-init";
 
@@ -40,6 +41,13 @@ export default function RootLayout({
       <body className="font-sans bg-bg text-ink">
         <CalInit />
         {children}
+        <Script id="feedbucket" strategy="afterInteractive">{`
+          (function(k) {
+            let s=document.createElement('script');s.defer=true;
+            s.src="https://cdn.feedbucket.app/assets/feedbucket.js";
+            s.dataset.feedbucket=k;document.head.appendChild(s);
+          })('sWz8bfu7CAhC5sydGrSh')
+        `}</Script>
       </body>
     </html>
   );
