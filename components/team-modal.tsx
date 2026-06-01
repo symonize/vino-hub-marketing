@@ -11,7 +11,7 @@ export type TeamMember = {
   initials: string;
   shortBio: string;
   fullBio: string[];
-  funFact?: string;
+  funFact?: string | string[];
 };
 
 interface Props {
@@ -103,9 +103,17 @@ export default function TeamModal({ member, onClose }: Props) {
                   <p className="text-[12px] font-semibold uppercase tracking-[1.5px] text-[#7f3333]">
                     Off the clock
                   </p>
-                  <p className="mt-2 text-[16px] leading-[24px] tracking-[-0.16px] text-[#2f2f2f]">
-                    {member.funFact}
-                  </p>
+                  {Array.isArray(member.funFact) ? (
+                    <ul className="mt-2 space-y-1 text-[16px] leading-[24px] tracking-[-0.16px] text-[#2f2f2f]">
+                      {member.funFact.map((fact, i) => (
+                        <li key={i}>{fact}</li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <p className="mt-2 text-[16px] leading-[24px] tracking-[-0.16px] text-[#2f2f2f]">
+                      {member.funFact}
+                    </p>
+                  )}
                 </div>
               )}
             </div>

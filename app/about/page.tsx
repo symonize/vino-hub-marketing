@@ -16,14 +16,18 @@ const TEAM: TeamMember[] = [
     title: "Co-Founder & Head of Client Strategy",
     initials: "GP",
     shortBio:
-      "From the cellars of Veneto to the boardrooms of New York importers.",
+      "Born in Italy's Prosecco region — bridging old-world tradition and modern digital strategy.",
     fullBio: [
-      "Giulia grew up in the Veneto region of Italy, where her family's relationship with wine wasn't a hobby — it was the texture of daily life. After moving to New York, she spent nearly a decade leading digital strategy for boutique importers and Michelin-starred wine programs.",
-      "She co-founded VinoHub because she watched too many talented sommeliers and brand managers drowning in spreadsheets, ten-year-old PDFs, and Dropbox folders nobody could find. Her job here is to make sure every workflow we build maps to how the trade actually works — not how a software company thinks it works.",
-      "Today she leads client strategy, working directly with importers and distributors to translate the messy reality of the wine business into systems that finally feel native to it.",
+      "Born and raised in Italy's Prosecco region, wine is more than an industry to me: it is my heritage. My life journey has taken me from the artisanal vineyards of Veneto to the tech-driven landscape of the U.S. market.",
+      "I earned a degree in Communication from the historical University of Padova, followed by a Master's in Marketing in Spain. Having lived in six cities across four countries at the beginning of my career, I bring an international perspective and authentic Italian roots to the U.S. wine industry, bridging the gap between old-world tradition and modern digital strategy.",
+      "With a career spanning from boutique Italian importers to the technology division of Southern Glazer's Wine & Spirits, I have seen the industry from every angle. I managed million-dollar projects and digital platform rollouts, giving me a front-row seat to the systems that power the nation's wine trade. This experience revealed a critical truth: while the wine itself is world-class, the technology used to move it often lags behind.",
+      "My mission is to bridge that gap: combining complex, multi-layered wine business workflows with a modern, digital-first approach to assets and operations.",
     ],
-    funFact:
-      "Will absolutely die on the hill that Soave is one of Italy's most underrated whites. Don't get her started.",
+    funFact: [
+      "Favorite Pour: A chilled Prosecco di Valdobbiadene DOCG.",
+      "Off-Duty: I'm an avid beach volleyball player and professional boat day enthusiast.",
+      "Secret Skill: I make delicious handmade ravioli and gnocchi. If you need proof, you're more than welcome to stop by and judge for yourself! ;)",
+    ],
   },
   {
     id: "julian",
